@@ -1,0 +1,79 @@
+<%= stylesheet_link_tag "users.css" %>
+
+
+<h1 align="center" class="my-4 pt-5">Registered User List</h1>
+
+<table align="center" class="shadow" id="table">
+    <tr class="border-bottom">
+        <th>
+            Seriel No
+        </th>
+        <th>
+            First Name
+        </th>
+        <th>
+            Last Name
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Role
+        </th>
+        <th>
+            Options
+        </th>
+    </tr>
+
+    <% @users.each_with_index do |user,i| %>
+        <tr>
+            <div class="row">
+                <td>
+                    <%= i+1 %>
+                </td>
+                <td>
+                    <%= user.first_name %>
+                </td>
+                <td>
+                    <%= user.last_name %>
+                </td>
+                <td><%= user.email %></td>    
+                <td><%= user.roles.map{ |role| role.title}.join(",") %></td> 
+                <td>
+                    <%= link_to user_path(user),class: "btn btn-outline-primary" do %>
+                        <i class="bi bi-eye-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Show User"></i>
+                    <% end %>
+                    <%= link_to edit_user_path(user), class: "btn btn-outline-dark" do %>
+                    <i class="bi bi-pencil-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit User"></i>
+                    <% end %>
+                    
+                    <%= link_to user_path(user), data: { turbo_method: :delete, turbo_confirm: 'Are you sure to delete the user?' }, class: "btn btn-outline-danger " do %>
+                    <i class="bi bi-trash-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete User"></i>
+                    <% end %>
+                    
+                </td>   
+            </div>
+
+        </tr>
+    <% end %>
+    
+</table>
+
+<div align="center" class="mt-4">
+    <%= link_to 'Add Another', new_user_path,class:"btn btn-outline-success" %>
+</div>
+
+<!-- <div class="d-flex justify-content-center mt-5"> -->
+  <%#  if params[:page].to_i > 1 %>
+   <!-- <div class=""><%= link_to "Previous", users_path(page: params[:page].to_i - 1), class:"btn btn-outline-secondary mx-4" %></div> -->
+  <%#  end %>
+  <!--  -->
+  <%#  if @users.size == @per_page %>
+    <%# if !params[:page] %>
+      <!-- <div class=""><%= link_to "Next", users_path(page: 2), class:"btn btn-outline-secondary" %></div> -->
+    <%# else %>
+      <!-- <div class=""><%= link_to "Next", users_path(page: params[:page].to_i + 1), class:"btn btn-outline-secondary" %></div> -->
+    <%# end %>
+  <%#  end %>
+  <!--  -->
+<!-- </div> -->
