@@ -1,17 +1,26 @@
 class RolePolicy < ApplicationPolicy
+
+  def index?
+    user.admin?
+  end
+
   def new?
-    user.is_admin?
+    user.admin?
   end
 
   def show?
-    user.is_admin?
+    user.admin?
   end
 
   def edit?
-    user.is_admin?
+    user.admin?
+  end
+
+  def update?
+    edit?
   end
 
   def destroy?
-    user.is_admin?
+    user.admin?
   end
 end
