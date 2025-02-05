@@ -9,9 +9,17 @@ class Users::SessionsController < Devise::SessionsController
   # end
 
   # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  def create
+    # self.resource = warden.authenticate!(auth_options)
+    
+    # binding.pry
+    
+    if User.find_by(email: params[:user][:email]).inactive?
+      redirect_to new_user_session_path, notice: "Your Status Is Inactive !!! Contact Support" 
+    else  
+      super
+    end
+  end
 
   # DELETE /resource/sign_out
   # def destroy
@@ -26,5 +34,10 @@ class Users::SessionsController < Devise::SessionsController
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_in_params
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
+  # end
+  # def configure_sign_in_params
+  #   devise_parameter_sanitizer.permit(:sign_in) do |user_params|
+  #     user_params.permit(:email, :password)
+  #   end
   # end
 end

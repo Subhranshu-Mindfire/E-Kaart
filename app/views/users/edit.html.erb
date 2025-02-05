@@ -28,7 +28,13 @@
           <%= f.check_box :roles, {multiple: true,checked: @user.roles.map{|rol| rol.id}.include?(role.id)}, role.id, nil %>
           <%= f.label :roles, role.title, class:"mx-2" %>  
         <% end %>
+       
     </div>
+     <div class="d-flex justify-content-center gap-2">
+      <%= f.label :status, 'Status: ' %>
+      <%# = binding.pry %>
+      <%= f.select :status, options_for_select(User.statuses.map { |status, value| [status.to_s.humanize, status.to_s]}, selected: [@user[:status]]), class: "form-control" %>
+     </div>
         
     </div>
     <div class="actions mb-3">
