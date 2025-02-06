@@ -2,11 +2,6 @@ class UsersController < ApplicationController
   before_action :authenticate_user!, except: [:home]
 
   def index
-    # page = params[:page].to_i || 1
-    # per_page = 4  
-    # offset = (page - 1) * per_page
-    # @users = User.limit(per_page).offset(offset)
-    # authorize @users
     @users = User.all
     authorize @users    
   end
