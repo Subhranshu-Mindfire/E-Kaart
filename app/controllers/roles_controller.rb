@@ -1,7 +1,6 @@
 class RolesController < ApplicationController
   before_action :authenticate_user!
   before_action :role, only: [:edit, :update, :destroy, :show]
-  before_action :authorize_role
 
   def index
     @roles = Role.all
@@ -62,11 +61,5 @@ class RolesController < ApplicationController
     @role ||= Role.find(params[:id])
     rescue ActiveRecord::RecordNotFound => e
       redirect_to '/404', alert: "Role not found"
-  end
-
-  def authorize_role
-    authorize current_user
-    rescue Pundit::NotAuthorizedError
-      redirect_to root_path, alert: "You are not authorized to perform this action."
   end
 end

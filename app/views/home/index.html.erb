@@ -17,9 +17,11 @@
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus ipsa illum labore dolores doloribus velit omnis, ut explicabo a voluptas impedit aliquam. Doloremque veniam magni harum velit cum voluptatem ipsam magnam, rem sunt doloribus itaque, quibusdam distinctio ratione cupiditate unde animi accusantium rerum praesentium veritatis?
               </p>
 
-              <div class="hero-buttons">
-                <%= link_to 'Get Started', new_user_registration_path, class: "btn btn-primary me-0 me-sm-2 mx-1" %>
-              </div>
+              <% unless current_user %>
+                  <div class="hero-buttons">
+                  <%= link_to 'Get Started', new_user_registration_path, class: "btn btn-primary me-0 me-sm-2 mx-1" %>
+                </div>
+              <% end %>
             </div>
           </div>
 

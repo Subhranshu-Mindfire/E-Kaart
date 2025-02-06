@@ -77,7 +77,11 @@ class UsersController < ApplicationController
       redirect_to root_path
       return
     end
-    
+  end
+
+  def products
+    @products = Product.where(user_id: current_user.id)
+    # authorize @products
   end
 
   private

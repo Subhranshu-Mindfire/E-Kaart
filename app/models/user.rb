@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable
   has_many :user_roles, dependent: :destroy
   has_many :roles, through: :user_roles
+  has_many :products
 
   validates :email, presence: true, uniqueness: true 
         
@@ -14,6 +15,10 @@ class User < ApplicationRecord
   }
   def admin?
     role_ids.include?(1)
+  end
+
+  def owner?
+    role_ids.include?(3)
   end
 
 end
