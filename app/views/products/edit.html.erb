@@ -1,0 +1,14 @@
+<div>
+  <div class="container">
+    <div class="form-box shadow-lg" style="height: 55vh;">
+    
+    <%= form_for @product do |f| %>
+    <h1 class="text-dark mt-3">Product Update</h1>
+      <%= render "form", f: f%>
+      <%= f.submit "Update", class: "btn btn-primary my-2"%>
+      <% end %>
+  </div>
+</div>
+
+
+

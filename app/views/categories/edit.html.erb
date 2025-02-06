@@ -1,0 +1,27 @@
+<%= stylesheet_link_tag "new_user.css", "data-turbo-track": "reload" %>
+
+<div class="back-btn">
+    <%= link_to '<-Back', categories_path %>
+</div>
+
+<div class="h-100">
+    <div class="container ">
+        <div class="form-box shadow" style="height: 40vh;">
+            <%= form_for @category, html: { class: ' d-flex justify-center'}  do |f| %>
+
+            <h1>Categoy Update</h1>
+
+                <div>
+                    <%= f.text_field :name ,placeholder:" Title", class:"form-control" %>
+                </div>
+                <div>
+                    <%= f.text_field :description ,placeholder:" Description", class:"form-control"  %>
+                </div>
+                <div>
+                <%= f.submit "Update", class:"btn btn-outline-primary" %>
+                </div>
+
+            <% end %>
+        </div>
+    </div>
+</div>

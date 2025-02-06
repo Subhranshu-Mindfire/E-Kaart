@@ -1,0 +1,69 @@
+<%= stylesheet_link_tag "users.css", "data-turbo-track": "reload"%>
+
+
+<h1 align="center" class="my-4 pt-5">Registered Product List</h1>
+
+<table align="center" class="shadow" id="table">
+    <tr class="border-bottom">
+        <th>
+          Seriel No
+        </th>
+        <th>
+           Image
+        </th>
+        <th>
+          Name
+        </th>
+        <th>
+          Description
+        </th>
+        <th>
+          Category
+        </th>
+        <th>
+          Owner
+        </th>
+        <th>
+          Options
+        </th>
+    </tr>
+
+    <% @products.each_with_index do |product,i| %>
+      <tr>
+        <div class="row">
+          <td>
+              <%= i+1 %>
+          </td>
+          <td>
+              <%= product.image %>
+          </td>
+          <td>
+              <%= product.name %>
+          </td>
+          <td><%= product.description %></td>
+          <td><%= product.categories.map{|category| category.name}.join(",") %></td>      
+          <td><%= product.user.first_name + " " + product.user.last_name %></td> 
+          <td>
+              <%= link_to product_path(product),class: "btn btn-outline-primary" do %>
+                  <i class="bi bi-eye-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Show product"></i>
+              <% end %>
+              <%= link_to edit_product_path(product), class: "btn btn-outline-dark" do %>
+              <i class="bi bi-pencil-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit product"></i>
+              <% end %>
+              
+              <%= link_to product_path(product), data: { turbo_method: :delete, turbo_confirm: 'Are you sure to delete the product?' }, class: "btn btn-outline-danger " do %>
+              <i class="bi bi-trash-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete product"></i>
+              <% end %>
+              
+          </td>   
+        </div>
+
+      </tr>
+    <% end %>
+    
+</table>
+
+<div align="center" class="mt-4">
+    <%= link_to 'Add Another', new_product_path,class:"btn btn-outline-success" %>
+</div>
+

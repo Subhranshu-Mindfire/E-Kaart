@@ -1,0 +1,53 @@
+<%= stylesheet_link_tag "users.css", "data-turbo-track": "reload" %>
+
+<h1 align="center" class="my-5 py-5">Categories List</h1>
+
+<table align="center" class="shadow">
+    <tr class="border-bottom">
+        <th>
+            Seriel No
+        </th>
+        <th>
+            Category
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Options
+        </th>
+    </tr>
+
+    <% @categories.each_with_index do |category,i| %>
+        <tr>
+            <div class="row">
+                <td>
+                    <%= i+1 %>
+                </td>
+                <td>
+                    <%= category.name %>
+                </td>
+                <td>
+                    <%= category.description %>
+                </td>                                                          
+                <td>
+                    <%= link_to category_path(category),class:"btn btn-outline-primary" do %>
+                        <i class="bi bi-eye-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Show Category"></i>
+                    <% end %>
+                    <%= link_to edit_category_path(category),class:"btn btn-outline-dark"  do %>
+                        <i class="bi bi-pen-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Category"></i>
+                    <% end %>
+                    <%= link_to category_path(category), data: { turbo_method: :delete, turbo_confirm: 'Are you sure to delete the Category?' },class:"btn btn-outline-danger" do %>
+                        <i class="bi bi-trash-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Category"></i>
+                    <% end %>
+                   
+            </div>
+
+        </tr>
+    <% end %>
+    
+</table>
+
+<div align="center" class="mt-4">
+    <%= link_to 'Add Another', new_category_path,class:"btn btn-outline-success" %>
+</div>

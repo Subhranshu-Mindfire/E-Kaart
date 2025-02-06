@@ -26,7 +26,13 @@ Rails.application.routes.draw do
     collection do
       get '/home', to: 'users#home'
     end
+    member do
+      get '/products', to: 'users#products'
+    end
   end
 
   resources :roles
+
+  resources :products
+  resources :categories
 end

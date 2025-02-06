@@ -10,11 +10,10 @@ class Users::SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
   def create
-    # self.resource = warden.authenticate!(auth_options)
-    
-    # binding.pry
-    
-    if User.find_by(email: params[:user][:email]).inactive?
+    if User.find_by(email: params[:user][:email]).blank?
+      redirect_to new_user_session_path, alert: "User Doesn't Exist"
+      return  
+    elsif User.find_by(email: params[:user][:email]).inactive?
       redirect_to new_user_session_path, notice: "Your Status Is Inactive !!! Contact Support" 
     else  
       super
