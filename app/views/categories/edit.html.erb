@@ -18,6 +18,10 @@
                     <%= f.text_field :description ,placeholder:" Description", class:"form-control"  %>
                 </div>
                 <div>
+                    <%= f.label :parent_id, "Select Parent Category (If Exist)", class: "form-label" %>
+                    <%= f.collection_select :parent_id, Category.all, :id, :name, { include_blank: 'None' }, class: 'form-control max-h', size: "2"  %>
+                </div>
+                <div>
                 <%= f.submit "Update", class:"btn btn-outline-primary" %>
                 </div>
 

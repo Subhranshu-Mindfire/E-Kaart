@@ -16,17 +16,43 @@
         <th>
             Actions
         </th>
+        
     </tr>
-
+    
     <% @categories.each_with_index do |category,i| %>
+    
+
         <tr>
+            
             <div class="row">
                 <td>
                     <%= i+1 %>
                 </td>
                 <td>
-                    <%= category.name %>
-                </td>
+                <% unless category.subcategories.empty? %>
+                    <div>
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fs-5 fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= i %>" aria-expanded="true" aria-controls="collapseOne">
+                                    <%= category.name %>
+                                </button>
+                            </h2>
+                            <div id="collapse<%= i %>" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                <% category.subcategories.pluck(:name).each do |item| %>
+                                    <div class="accordion-body">
+                                    <%= item.humanize %>
+                                </div>
+                                <% end %> 
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% else %>
+                <%= category.name %>
+                <% end %>
+            </td>
                 <td>
                     <%= category.description %>
                 </td>                                                          
@@ -42,6 +68,7 @@
                     <% end %>
                    
             </div>
+            
 
         </tr>
     <% end %>

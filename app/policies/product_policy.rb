@@ -1,22 +1,22 @@
 class ProductPolicy < ApplicationPolicy
   def index?
-    user.admin?
-  end
-
-  def create?
     user.admin? || user.owner?
   end
 
   def new?
-    user.admin? || user.owner?
+    index?
+  end
+
+  def create?
+    index?
   end
 
   def show?
-    user.admin? || user.owner?
+    index?
   end
 
   def edit?
-    user.admin? || user.owner?
+    index?
   end
 
   def update?
@@ -24,6 +24,6 @@ class ProductPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user.admin? || user.owner?
+    index?
   end
 end

@@ -1,12 +1,16 @@
 <%= stylesheet_link_tag "users.css", "data-turbo-track": "reload"%>
+<%# = javascript_include_tag 'filename' %>
 
 <div align="center" class="mt-4">
    
 </div>
 
 
-<h1 align="center" class="my-4 pt-5">Registered Product List</h1>
-
+<% unless @title %>
+  <h1 align="center" class="my-4 pt-5">Registered Product List</h1>
+<% else %>
+  <h1 align="center" class="my-4 pt-5">Search Results for "<%= @title %>"</h1>
+<% end %>
 <table align="center" class="shadow" id="table">
     <tr class="border-bottom">
         <th>
@@ -49,21 +53,21 @@
           <td>
               <%= product.name %>
           </td>
-          <td><%= product.price %>&#8377;</td>
+          <td>&#8377;<%= product.price %></td>
           <td><%= product.categories.map{|category| category.name}.join(",") %></td>      
           <td><%= product.user.first_name + " " + product.user.last_name %></td> 
           <td>
             <%= link_to @stock[product], product_stock_product_path(product)%>
           </td>
           <td>
-              <%= link_to product_path(product),class: "btn btn-lg" do %>
+              <%= link_to product_path(product),class: "btn btn-lg text-primary" do %>
                   <i class="bi bi-eye-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Show product"></i>
               <% end %>
-              <%= link_to edit_product_path(product), class: "btn btn-lg" do %>
+              <%= link_to edit_product_path(product), class: "btn btn-lg text-dark" do %>
               <i class="bi bi-pencil-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit product"></i>
               <% end %>
               
-              <%= link_to product_path(product), data: { turbo_method: :delete, turbo_confirm: 'Are you sure to delete the product?' }, class: "btn btn-lg " do %>
+              <%= link_to product_path(product), data: { turbo_method: :delete, turbo_confirm: 'Are you sure to delete the product?' }, class: "btn btn-lg text-danger" do %>
               <i class="bi bi-trash-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete product"></i>
               <% end %>
 
@@ -110,12 +114,9 @@
       buttons.forEach(button => {
         button.addEventListener('click', function () {
           const productId = this.getAttribute('data-id');
-          const productName = this.getAttribute('data-name');
-          const heading = document.getElementById("exampleModalToggleLabel")
           const productIdElement = document.getElementById('product_stock_product_id');
           if (productIdElement) {
             productIdElement.value = productId;
-            heading.value = productName
             console.log("hii")
           }
         });
