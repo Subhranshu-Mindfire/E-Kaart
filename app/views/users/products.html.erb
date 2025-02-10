@@ -24,7 +24,7 @@
           Stocks Available
         </th>
         <th>
-          Options
+          Actions
         </th>
     </tr>
 
@@ -43,7 +43,7 @@
           <td>&#8377;<%= product.price %></td>
           <td><%= product.categories.map{|category| category.name}.join(",") %></td>  
           <td>
-            <%= @stock[product] %>
+            <%= link_to @stock[product], product_stock_product_path(product)%>
           </td>     
           <td class="fs-1">
               <%= link_to product_path(product),class: "btn text-primary btn-lg" do %>
@@ -74,7 +74,7 @@
         <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Modal 1</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <%= form_for ProductStock.new, url: stocks_path ,html: {class: "h-65"} do |f|%>
+      <%= form_for ProductStock.new, url: product_stocks_path ,html: {class: "h-65"} do |f|%>
         <div>
           <%= f.hidden_field :product_id %>
           <%= f.label :transaction_type, 'Transaction Type: ', class: "mx-2"%>

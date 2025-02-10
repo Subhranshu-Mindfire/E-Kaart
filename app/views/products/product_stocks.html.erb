@@ -1,0 +1,45 @@
+<% if @product_stocks.empty? %>
+  <h1 class="text-center pt-3 mt-4">No Transactions Found For This Product</h1>
+  <% else %>
+
+<h1 class="text-center pt-3 mt-4">Transactions of stocks for <%= @product_stocks.first.product.name %> </h1>
+<table align="center" class="mt-5">
+  <tr class="text-center stocks border-bottom">
+    <th>Seriel No</th>
+    <!-- <th>Product Name</th> -->
+    <th>Transcation Type </th>
+    <th>Quantity</th>
+    <th>Actions</th>
+  </tr>
+  <% @product_stocks.each_with_index do |product_stock,i| %>
+    <tr class="text-center shadow-sm">
+      <td>
+        <%= i+1 %>
+      </td>
+      <!-- <td> -->
+        <%# = product_stock.product.name %>
+      <!-- </td> -->
+      <td>
+        <%= product_stock.transaction_type.humanize %>
+      </td>
+      <td>
+        <%= product_stock.quantity %>
+      </td>
+      <td>
+          <%= link_to edit_product_stock_path(product_stock), class: "btn btn-lg text-dark" do %>
+            <i class="bi bi-pencil-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit User"></i>
+          <% end %>
+
+          <%= link_to product_stock_path(product_stock), data: { turbo_method: :delete, turbo_confirm: 'Are you sure to delete the Transaction?' }, class: "btn btn-lg text-danger" do %>
+            <i class="bi bi-trash-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Transaction"></i>
+          <% end %>
+          
+      </td>
+    </tr>
+  <% end %>
+
+</table>
+
+
+
+<% end %>
