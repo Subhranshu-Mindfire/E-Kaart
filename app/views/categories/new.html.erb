@@ -4,23 +4,30 @@
     <%= link_to '<-Back', categories_path %>
 </div>
 
-
 <div>
     <div class="container">
         <div class="form-box shadow-lg">
             <%= form_for @category, html: { class: 'form-control d-flex justify-center' } do |f| %>
 
-                <h1 class="text-dark">Category Addition</h1>
+                <h1 class="text-dark">Add Category</h1>
                 
-                 <div>
-                    <%= f.text_field :name ,placeholder:"Category Name", class:"form-control" %>
-                </div>
                 <div>
-                    <%= f.text_field :description ,placeholder:" Description", class:"form-control"  %>
+                    <%= f.text_field :name, placeholder: "Category Name", class: "form-control" %>
                 </div>
-            <div>
-                <%= f.submit "Add", class:"btn btn-outline-primary" %>
-            </div>
+                
+                <div>
+                    <%= f.text_field :description, placeholder: "Description", class: "form-control" %>
+                </div>
+                
+                <div>
+                    <%= f.label :parent_id, "Select Parent Category (If Exist)", class: "form-label" %>
+                    <%= f.collection_select :parent_id, Category.all, :id, :name, { include_blank: 'None' }, { class: 'form-control' } %>
+                </div>
+                
+                <div>
+                    <%= f.submit "Add", class: "btn btn-outline-primary" %>
+                </div>
+
             <% end %>
         </div>
     </div>

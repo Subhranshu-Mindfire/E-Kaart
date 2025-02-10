@@ -1,6 +1,5 @@
 class CategoriesController < ApplicationController
   before_action :authenticate_user!
-  before_action :category, only: [:edit, :update, :destroy, :show]
 
   def index
     @categories = Category.all
@@ -31,7 +30,7 @@ class CategoriesController < ApplicationController
   end
 
   def update
-    authorize @category
+    authorize category
     if @category.update(category_params)
       redirect_to categories_path, notice: "Category Updated Successfully"
     else
@@ -46,7 +45,7 @@ class CategoriesController < ApplicationController
   end
 
   def destroy
-    authorize @category
+    authorize category
     @category.destroy
     redirect_to categories_path, notice: "category Deleted Successfully"
   end
@@ -54,7 +53,7 @@ class CategoriesController < ApplicationController
   private
 
   def category_params
-    params.require(:category).permit(:name, :description)
+    params.require(:category).permit(:name, :description, :parent_id)
   end
 
   def category

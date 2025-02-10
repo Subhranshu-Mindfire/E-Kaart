@@ -2,8 +2,6 @@
 
 <div class="d-flex align-items-center main">
     <div class = "container d-flex justify-content-center align-items-center shadow p-3 mb-5 bg-body-tertiary rounded show_container flex-column w-50 h-50 mt-5">
-    <!-- <p class="h1 text-center mb-5">My Profile</p> -->
-<!--  -->
     <div class = "mb-5">
         <span class = "text-center fw-medium fs-4"> Name : </span> 
         <span class = "fw-light fs-5"><%= @product.name%></span>
@@ -21,6 +19,10 @@
     <div class = "mb-2">
         <span class = "text-center fw-medium fs-4">Categories : </span>
         <span class = "fw-light fs-5"><%= @product.categories.map{|category| category.name}.join(",")%></span>
+    </div>
+    <div class = "mb-2">
+        <span class = "text-center fw-medium fs-4">Categories : </span>
+        <span class = "fw-light fs-5"><%= image_tag @product.images.first %></span>
     </div>
 
     <div class = "mt-5">

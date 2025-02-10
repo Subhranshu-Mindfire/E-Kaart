@@ -12,6 +12,7 @@
       <span class="px-3 fs-5">
         Welcome, <%= current_user.first_name %>
       </span>
+       <%= link_to 'Add Another +', new_product_path,class:"btn btn-outline-success" %>
 
       <!-- Admin Dropdown: Visible only if the user is an admin -->
       <% if current_user.admin? %>
@@ -35,7 +36,7 @@
           </button>
           <ul class="dropdown-menu">
             <%= link_to 'Add Product +', new_product_path, class: "dropdown-item" %>
-            <%= link_to 'Products', products_user_path(current_user), class: "dropdown-item" %>  
+            <%= link_to 'My Products', products_user_path(current_user), class: "dropdown-item" %>  
           </ul>
         </div>
           
