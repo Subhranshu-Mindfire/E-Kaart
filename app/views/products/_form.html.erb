@@ -1,3 +1,4 @@
+<%= stylesheet_link_tag 'add_product.css' %>
 <div class="d-flex input-fields">
     <div class="mt-3">
         <%= f.text_field :name ,placeholder:"Product Name", class:"form-control"  %>
@@ -16,15 +17,13 @@
         <% end %>
     </div>
     <div class="mt-3 ">
-      <%= f.label :image, 'Add Image :', class: "mb-3" %>
+      <%= f.label :images, 'Add Image :', class: "mb-3" %>
       <div>
-        <%= f.file_field :image, placeholder: "Add Image" %>
+        <%= f.file_field :images, placeholder: "Add Image", multiple: true %>
       </div>
     </div>
-    <div class="mt-3 d-flex justify-content-center"> 
-        <% Category.all.each do |category| %>
-          <%= f.check_box :categories, {multiple: true,checked: @product.categories.map{|category| category.id}.include?(category.id)}, category.id, nil %>
-          <%= f.label :categories, category.name, class:"mx-2" %>  
-        <% end %>
+    <div >
+        <%= f.label :categories, 'Select Categories: ' %>
+        <%= f.select :category_ids, options_from_collection_for_select(Category.all, :id, :name, @product.category_ids), class: "form-select max-h", multiple: true %>
     </div>
 </div>

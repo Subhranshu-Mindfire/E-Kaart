@@ -13,6 +13,7 @@ class User < ApplicationRecord
     active: 0,
     inactive: 1
   }
+  
   def admin?
     role_ids.include?(1)
   end

@@ -33,6 +33,10 @@ Rails.application.routes.draw do
 
   resources :roles
 
-  resources :products
+  resources :products 
+
   resources :categories
+  resources :stocks, only: [:index, :update, :create, :destroy]
+
+  # post '/add_stock', to: 'stocks#create'
 end

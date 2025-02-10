@@ -1,0 +1,29 @@
+
+<h1 class="text-center pt-3 mt-4">Product Stock Management</h1>
+<table align="center" class="mt-5">
+  <tr class="text-center stocks">
+    <th>Seriel No</th>
+    <th>Product Name</th>
+    <th>Transcation Type </th>
+    <th>Quantity</th>
+    <th>Options</th>
+  </tr>
+  <% @stocks.each_with_index do |stock,i| %>
+    <tr class="text-center">
+      <td>
+        <%= i+1 %>
+      </td>
+      <td>
+        <%= stock.product.name %>
+      </td>
+      <td>
+        <%= stock.transaction_type.humanize %>
+      </td>
+      <td>
+        <%= stock.quantity %>
+      </td>
+    </tr>
+  <% end %>
+
+</table>
+

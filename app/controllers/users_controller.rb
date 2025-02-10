@@ -82,6 +82,10 @@ class UsersController < ApplicationController
   def products
     @products = Product.where(user_id: current_user.id)
     # authorize @products
+    @stock={}
+    @products.each do |product|
+      @stock[product] = product.product_stocks.where(transaction_type: 1).pluck(:quantity).sum - product.product_stocks.where(transaction_type: 0).pluck(:quantity).sum
+    end
   end
 
   private

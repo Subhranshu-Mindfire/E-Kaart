@@ -1,6 +1,5 @@
 class RolesController < ApplicationController
   before_action :authenticate_user!
-  before_action :role, only: [:edit, :update, :destroy, :show]
 
   def index
     @roles = Role.all
@@ -31,7 +30,7 @@ class RolesController < ApplicationController
   end
 
   def update
-    authorize @role
+    authorize role
     if @role.update(role_params)
       redirect_to roles_path, notice: "Role Updated Successfully"
     else
@@ -46,7 +45,7 @@ class RolesController < ApplicationController
   end
 
   def destroy
-    authorize @role
+    authorize role
     @role.destroy
     redirect_to roles_path, notice: "Role Deleted Successfully"
   end

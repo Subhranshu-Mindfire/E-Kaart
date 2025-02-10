@@ -55,13 +55,18 @@ table{
 th{
   text-align: center;
 }
-
+.stocks th{
+  padding: 20px;
+}
 td{
-  padding: 35px;
+  padding: 15px;
 }
 
 table{
   font-size: 20px;
+  padding: 20px;
+}
+tbody{
   padding: 20px;
 }
 
@@ -71,6 +76,9 @@ table{
 
 .mt-2{
   margin-top: 20px;
+}
+td{
+  text-align: center;
 }
 
 .back-btn{
@@ -85,4 +93,8 @@ table{
 
 .show th{
   padding-left: 20px;
+}
+
+.w-200px{
+  width: 300px;
 }
