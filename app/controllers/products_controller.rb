@@ -44,8 +44,7 @@ class ProductsController < ApplicationController
       render :edit, status: :unprocessable_entity
       return
     end
-    if @product.update(product_params)
-      @product.update(category_ids: params[:product][:categories])
+    if @product.update(product_params.merge(category_ids: params[:product][:categories]))
       if current_user.admin?
         redirect_to products_path, notice: "Product Updated Successfully"
       else
