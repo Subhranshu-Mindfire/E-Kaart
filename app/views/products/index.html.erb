@@ -67,62 +67,62 @@
               <i class="bi bi-trash-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete product"></i>
               <% end %>
 
-
-              <button class="btn btn-lg text-success" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" data-id=<%= product.id %> data-name=<%= product.name %>>
-                <i class="bi-plus-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Stock Opertion"></i>
-              </button>
+<!--  -->
+              <!-- <button class="btn btn-lg text-success" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" data-id=<%= product.id %> data-name=<%= product.name %>> -->
+                <!-- <i class="bi-plus-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Stock Opertion"></i> -->
+              <!-- </button> -->
           </td>   
         </div>
       </tr>
     <% end %>
 </table>
 
-<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1"></div>
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Modal 1</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <%= form_for ProductStock.new, url: stocks_path ,html: {class: "h-65"} do |f|%>
-        <div>
-          <%= f.hidden_field :product_id %>
-          <%= f.label :transaction_type, 'Transaction Type: ', class: "mx-2"%>
-          <%= f.select :transaction_type, options_for_select(ProductStock.transaction_types.map { |type, value| [type.to_s.humanize, type.to_s]}), {},class: "form-select"%>
-          <br>
-          <%= f.number_field :quantity, placeholder: "Quantity", class:"form-control mb-4"%>
-        </div>
-        <div class="d-flex flex-column align-items-center my-4 gap-3">
-          <%= f.submit "Submit", class: "btn btn-primary "%>
-        </div>
-        </div>
-      <%end%>
-      
-    </div>
-  </div>
-</div>
+<!-- <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1"></div> -->
+  <!-- <div class="modal-dialog modal-dialog-centered"> -->
+    <!-- <div class="modal-content"> -->
+      <!-- <div class="modal-header"> -->
+        <!-- <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Modal 1</h1> -->
+        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+      <!-- </div> -->
+      <%# = form_for ProductStock.new, url: stocks_path ,html: {class: "h-65"} do |f| %>
+        <!-- <div> -->
+          <%# = f.hidden_field :product_id %>
+          <%# = f.label :transaction_type, 'Transaction Type: ', class: "mx-2" %>
+          <%# = f.select :transaction_type, options_for_select(ProductStock.transaction_types.map { |type, value| [type.to_s.humanize, type.to_s]}), {},class: "form-select" %>
+          <!-- <br> -->
+          <%# = f.number_field :quantity, placeholder: "Quantity", class:"form-control mb-4" %>
+        <!-- </div> -->
+        <!-- <div class="d-flex flex-column align-items-center my-4 gap-3"> -->
+          <%# = f.submit "Submit", class: "btn btn-primary " %>
+        <!-- </div> -->
+        <!-- </div> -->
+      <%# end %>
+      <!--  -->
+    <!-- </div> -->
+  <!-- </div> -->
+<!-- </div> -->
 
-<script>
- 
-      document.addEventListener('DOMContentLoaded', function () {
-      const buttons = document.querySelectorAll('[data-bs-toggle="modal"]');
-      buttons.forEach(button => {
-        button.addEventListener('click', function () {
-          const productId = this.getAttribute('data-id');
-          const productName = this.getAttribute('data-name');
-          const heading = document.getElementById("exampleModalToggleLabel")
-          const productIdElement = document.getElementById('product_stock_product_id');
-          if (productIdElement) {
-            productIdElement.value = productId;
-            heading.value = productName
-            console.log("hii")
-          }
-        });
-      });
-    });
-
-</script>
-
+<!-- <script> -->
+ <!--  -->
+      <!-- document.addEventListener('DOMContentLoaded', function () { -->
+      <!-- const buttons = document.querySelectorAll('[data-bs-toggle="modal"]'); -->
+      <!-- buttons.forEach(button => { -->
+        <!-- button.addEventListener('click', function () { -->
+          <!-- const productId = this.getAttribute('data-id'); -->
+          <!-- const productName = this.getAttribute('data-name'); -->
+          <!-- const heading = document.getElementById("exampleModalToggleLabel") -->
+          <!-- const productIdElement = document.getElementById('product_stock_product_id'); -->
+          <!-- if (productIdElement) { -->
+            <!-- productIdElement.value = productId; -->
+            <!-- heading.value = productName -->
+            <!-- console.log("hii") -->
+          <!-- } -->
+        <!-- }); -->
+      <!-- }); -->
+    <!-- }); -->
+<!--  -->
+<!-- </script> -->
+<!--  -->
 
 
 
