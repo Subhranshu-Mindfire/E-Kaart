@@ -1,10 +1,9 @@
-class RolePolicy < ApplicationPolicy
-
+class ProductStockPolicy < ApplicationPolicy
   def index?
-    user.admin?
+    user.owner? || user.admin?
   end
-
-  def new?
+  
+  def create?
     index?
   end
 
@@ -17,7 +16,7 @@ class RolePolicy < ApplicationPolicy
   end
 
   def update?
-    index?
+    edit?
   end
 
   def destroy?

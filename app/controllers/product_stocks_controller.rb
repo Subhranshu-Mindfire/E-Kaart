@@ -23,11 +23,11 @@ class ProductStocksController < ApplicationController
   end
 
   def edit
-    product_stock
+    authorize product_stock
   end
 
   def update
-    product_stock
+    authorize product_stock
     if @product_stock.update(stock_params)
       redirect_to product_stocks_path, notice: "Stock Transaction Updated Successfully"
     else
@@ -37,7 +37,7 @@ class ProductStocksController < ApplicationController
   end
   
   def destroy
-    product_stock
+    authorize product_stock
     begin
       @product_stock.destroy
       redirect_to product_stocks_path, notice: "Successfully Deleted The Transaction"

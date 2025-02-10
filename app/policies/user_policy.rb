@@ -3,10 +3,6 @@ class UserPolicy < ApplicationPolicy
     user.admin?
   end
 
-  def create?
-    user.admin?  
-  end
-
   def edit?
     user.admin? || user == record
   end
@@ -20,10 +16,6 @@ class UserPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user.admin?  
+    index?  
   end
-
-  # def products?
-  #   user.owner?
-  # end
 end

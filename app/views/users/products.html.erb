@@ -1,8 +1,11 @@
 <%= stylesheet_link_tag "users.css"%>
 
 
-<h1 align="center" class="my-4 pt-5">My Products</h1>
-
+<% unless @title %>
+  <h1 align="center" class="my-4 pt-5">My Product </h1>
+<% else %>
+  <h1 align="center" class="my-4 pt-5">Search Results for "<%= @title %>"</h1>
+<% end %>
 <table align="center" class="shadow" id="table">
     <tr class="border-bottom">
         <th>

@@ -2,14 +2,19 @@ class ProductsController < ApplicationController
   before_action :authenticate_user!
   
   def index
-    @products = Product.all.order(created_at: :asc)
+    unless params[:search]
+      @products = Product.all.order(created_at: :asc)
+    else
+      @products = Product.all.select{|product| product.name.upcase.include?(params[:search].upcase)}
+      @title = params[:search]
+    end
     @stock={}
     
     @products.each do |product|
       @stock[product] = product.product_stocks.where(transaction_type: true).pluck(:quantity).sum - product.product_stocks.where(transaction_type: false).pluck(:quantity).sum
     end
     
-    authorize @products
+    authorize Product
   end
   
   def show
@@ -84,6 +89,6 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:name, :description, :price, images:[] )
+    params.require(:product).permit(:search, :name, :description, :price, images:[] )
   end
 end

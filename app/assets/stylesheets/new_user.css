@@ -37,3 +37,9 @@ form{
 .field_with_errors{
     display: inline;
 }
+
+.max-h{
+    max-height:70px;
+    /* overflow:auto; */
+    overflow-y: scroll;
+  }
