@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   before_action :authenticate_user!
-
+  
   def index
     @products = Product.all.order(created_at: :asc)
     @stock={}
@@ -13,7 +13,7 @@ class ProductsController < ApplicationController
   end
   
   def show
-    authorize @product
+    authorize product
   end
   
   def new
