@@ -39,12 +39,12 @@ class ProductsController < ApplicationController
   
   def update
     authorize product
-    if params[:product][:categories].blank?
+    if params[:product][:category_ids].blank?
       flash.now[:alert] = "Product Should Have Atleast One Category"
       render :edit, status: :unprocessable_entity
       return
     end
-    if @product.update(product_params.merge(category_ids: params[:product][:categories]))
+    if @product.update(product_params.merge(category_ids: params[:product][:category_ids]))
       if current_user.admin?
         redirect_to products_path, notice: "Product Updated Successfully"
       else
@@ -65,6 +65,14 @@ class ProductsController < ApplicationController
     rescue ActiveRecord::RecordNotFound => e
       redirect_to '/404'
     end
+  end
+
+  def product_stocks
+    begin
+      @product_stocks = ProductStock.where(product_id: params[:id]).order(created_at: :desc)
+    rescue ActiveRecord::RecordNotFound => e
+      redirect_to '/404'
+  end
   end
 
   private
