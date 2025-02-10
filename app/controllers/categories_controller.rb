@@ -34,12 +34,7 @@ class CategoriesController < ApplicationController
     if @category.update(category_params)
       redirect_to categories_path, notice: "Category Updated Successfully"
     else
-      res = ""
-
-      @category.errors.messages.each_key do |k| 
-        res += (k.to_s + " " + @category.errors.messages[k][0] + ", ")
-      end
-      flash.now[:alert] = res
+      flash.now[:alert] = category.errors.full_messages.join(', ')
       render :new, status: :unprocessable_entity
     end
   end

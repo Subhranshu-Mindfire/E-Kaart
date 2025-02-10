@@ -1,6 +1,6 @@
 class CategoryPolicy < ApplicationPolicy
   def index?
-    index?
+    user.admin?
   end
 
   def new?
@@ -20,6 +20,6 @@ class CategoryPolicy < ApplicationPolicy
   end
 
   def destroy?
-    index
+    index?
   end
 end
