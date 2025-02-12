@@ -9,11 +9,9 @@
      <%= form_tag root_path, method: :get, html: {class: "rounded-pill"} do %>
     <div class="input-group bg-white">
       <%= text_field_tag :search, params[:search], placeholder: "Search for products", class: "form-control border-0", name: "search" %>
-      
         <button class="btn btn-outline-success border-0" type="submit">
           Search
         </button>
-    
     </div>
   <% end %> 
 

@@ -1,13 +1,13 @@
 <%= stylesheet_link_tag "product.css", "data-turbo-track": "reload"%>
 
-<div class="main bg-light px-5">
-    <div class="hero px-5">
-        <div class="row m-5 p-5 h-600 bg-white">
-            <div class="col-md-5 text-center">
+<div class="main bg-light px-5 ">
+    <div class="hero px-5 m-300">
+        <div class="row p-5 h-600 bg-white ">
+            <div class="col-md-5">
                 <%= image_tag @product.images.first ,class: "img-fluid h-500"%>
             </div>
-            <div class="col-md-7  px-5">
-                <div class="d-flex flex-column justify-content-center py-5">
+            <div class="col-md-7">
+                <div class="d-flex flex-column justify-content-center pb-5">
                     <div class="fs-2 py-3">
                         <%= @product.name %>
                     </div>
@@ -22,11 +22,11 @@
                     <div class="fs-2 fw-bold py-3">
                         &#8377;<%= @product.price %>
                     </div>
-                    <div class="fs-2 fw-semibold py-3 row">
-                        <div class="col-md-6 bg-secondary rounded-pill text-center text-white">
+                    <div class="fs-4 mt-5 fw-semibold py-3 d-flex gap-3">
+                        <div class="w-25 py-1 bg-secondary rounded-pill text-center text-white">
                             Add To Cart
                         </div>
-                        <div class="col-md-6 bg-warning text-center rounded-pill">
+                        <div class="w-25 py-1 text-white bg-primary text-center rounded-pill">
                             Buy Now
                         </div>
                     </div>

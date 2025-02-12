@@ -21,29 +21,68 @@
         Categories
       </div>
       <% @categories.each_with_index do |category,i| %>
-        <% if !category.subcategories.blank? %>
+        <% if !category.subcategories.blank? and category.parent.blank?  %>
             <div>
-              <div class="accordion" id="accordionExample">
+              <div class="accordion" id="accordionExample<%= i %>">
                   <div class="accordion-item">
                       <div class="accordion-header d-flex rounded-1">
                         <div class="my-auto ms-3 w-75">
-                          <%= link_to home_category_path(category.id) do %>
+                          <%= link_to root_path(category:category.id) do %>
                             <%= category.name %>
                           <% end %>
                         </div>
                         <div>
-                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= i %>" aria-expanded="true" aria-controls="collapseOne">
+                          <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= i %>" aria-expanded="true" aria-controls="collapseOne">
                             
                         </button>
                         </div>
                       </div>
-                      <div id="collapse<%= i %>" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                          <% category.subcategories.pluck(:name,:id).each do |item| %>
-                              <div class="accordion-body">
-                              <%= link_to home_category_path(item[1]) do %>
-                                  <%= item[0] %>
+                      <div id="collapse<%= i %>" class="accordion-collapse collapse" data-bs-parent="#accordionExample<%=i%>">
+                          <% category.subcategories.each_with_index do |item,j| %>
+                              <% if !item.subcategories.blank? %>
+                                <div>
+                                  <div class="accordion" id="accordionExample">
+                                      <div class="accordion-item">
+                                          <div class="accordion-header d-flex rounded-1">
+                                            <div class="my-auto ms-3 w-75">
+                                              <%= link_to root_path(category:item.id) do %>
+                                                <%= item.name %>
+                                              <% end %>
+                                            </div>
+                                            <div>
+                                              <button class="accordion-button collapsed hey" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= i %><%= j %>" aria-expanded="true" aria-controls="collapseOne">
+                                                
+                                            </button>
+                                            </div>
+                                          </div>
+                                          <div id="collapse<%= i %><%= j %>" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                              <% item.subcategories.each do |item| %>
+                                                  <% if item.subcategories.blank? %>
+                                                    <div class="accordion-body">
+                                                      <%= link_to root_path(category: item.id) do %>
+                                                          <%= item.name %>
+                                                      <% end %>
+                                                    </div>
+                                                  <% else %>
+                                                      <div class="accordion-body">
+                                                      <%= link_to root_path(category: item.id) do %>
+                                                          <%= item.name %>
+                                                      <% end %>
+                                                    </div>
+                                                  <% end %>
+                                              <% end %> 
+                                              
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <% else %>
+                                  <div class="accordion-body">
+                                  <%= link_to root_path(category: item.id) do %>
+                                      <%= item.name %>
+                                  <% end %>
+                                </div>
                               <% end %>
-                          </div>
                           <% end %> 
                           
                       </div>
@@ -52,7 +91,7 @@
           </div>
           <% elsif !category.parent %>
           <div class="w-100 bg-white p-3 fs-6 rounded-1 border">
-            <%= link_to home_category_path(category.id) do %>
+            <%= link_to root_path(category:category.id) do %>
                 <%= category.name %>
             <% end %>
           </div>
@@ -61,7 +100,50 @@
     </div>
   </div>
   <div class="right col-md-10">
-    <div class="car pe-5 pt-5">
+    <% if @title %>
+      <div class="electronics bg-white py-4 my-3 d-flex flex-column">
+        <div class="heading fs-3 ps-5 pb-2">
+          Search Results For "<%= @title %>"
+        </div>
+        <div class="main row mx-5">
+          <% @products.each do |item| %>
+            <%= link_to product_path(item.id), class:"col-md-3" do %>
+              <div class="home-card  gap d-flex  align-items-center justify-content-center">
+                <div class="d-flex flex-column justify-content-center">
+                  <%= image_tag item.images.first, class:"img-fluid h-300"%>
+                  <div class="text-secondary text-center mt-2"><%= item.name %></div>
+                  <p class="fs-5 text-semibold text-center">
+                    &#8377;<%= item.price %>
+                  </p>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    <% elsif @name %>
+      <div class="electronics bg-white py-4 my-3 d-flex flex-column">
+        <div class="heading fs-3 ps-5 pb-2">
+          Products of <%= @name %> Categories
+        </div>
+        <div class="main row mx-5">
+          <% @products.each do |item| %>
+            <%= link_to product_path(item.id), class:"col-md-3" do %>
+              <div class="home-card  gap d-flex  align-items-center justify-content-center">
+                <div class="d-flex flex-column justify-content-center">
+                  <%= image_tag item.images.first, class:"img-fluid h-300"%>
+                  <div class="text-secondary text-center mt-2"><%= item.name %></div>
+                  <p class="fs-5 text-semibold text-center">
+                    &#8377;<%= item.price %>
+                  </p>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    <% else %>
+      <div class="car pe-5 pt-5">
       <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active" data-bs-interval="2000">
@@ -146,6 +228,7 @@
         </div>
       </div>
     </div>
+    <% end %>
   </div>
 </div>
 

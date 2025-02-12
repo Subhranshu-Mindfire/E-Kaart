@@ -5,3 +5,10 @@
 .h-500{
   height: 500px;
 }
+
+.main{
+  min-height: 95vh;
+}
+.m-300{
+  padding-top: 100px;
+}
