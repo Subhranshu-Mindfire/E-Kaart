@@ -15,8 +15,12 @@ class Users::SessionsController < Devise::SessionsController
       return  
     elsif User.find_by(email: params[:user][:email]).inactive?
       redirect_to new_user_session_path, notice: "Your Status Is Inactive !!! Contact Support" 
-    else  
+    else
       super
+      session[:cart_items].each do |cart_item|
+        CartItem.create(cart_item.merge(user_id: current_user.id))
+      end
+      session[:cart_items] = []
     end
   end
 

@@ -21,6 +21,7 @@ Rails.application.routes.draw do
 
   # get '/users', to: 'users#index'
 
+  resources :cart_items, path: :cart
   # put '/users/:id/edit', to: 'users#edit', as: :edit_user
   resources :users do
     collection do
@@ -30,6 +31,8 @@ Rails.application.routes.draw do
       get '/products', to: 'users#products'
     end
   end
+
+  
 
   resources :roles
 

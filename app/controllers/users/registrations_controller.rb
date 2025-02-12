@@ -11,9 +11,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   # POST /resource
-  # def create
-   
-  # end
+  def create
+    super
+    session[:cart_items].each do |cart_item|
+      CartItem.create(cart_item)
+    end
+    session[:cart_items] = []
+    
+  end
 
   # GET /resource/edit
   # def edit
