@@ -1,13 +1,13 @@
 class ProductsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:show]
   
   def index
-    unless params[:search]
+    # unless params[:search]
       @products = Product.all.order(created_at: :asc)
-    else
-      @products = Product.all.select{|product| product.name.upcase.include?(params[:search].upcase)}
-      @title = params[:search]
-    end
+    # else
+    #   @products = Product.all.select{|product| product.name.upcase.include?(params[:search].upcase)}
+    #   @title = params[:search]
+    # end
     @stock={}
     
     @products.each do |product|
@@ -18,7 +18,8 @@ class ProductsController < ApplicationController
   end
   
   def show
-    authorize product
+    # authorize 
+    product
   end
   
   def new

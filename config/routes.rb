@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   # put '/users/:id/edit', to: 'users#edit', as: :edit_user
   resources :users do
     collection do
-      get '/home', to: 'users#home'
+      get '/home', to: 'users#home' 
     end
     member do
       get '/products', to: 'users#products'

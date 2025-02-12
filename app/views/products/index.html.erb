@@ -1,5 +1,5 @@
 <%= stylesheet_link_tag "users.css", "data-turbo-track": "reload"%>
-<%# = javascript_include_tag 'filename' %>
+<%= javascript_include_tag "product_modal.js", "data-turbo-track": "reload"%>
 
 <div align="center" class="mt-4">
    
@@ -106,25 +106,5 @@
   </div>
 </div>
 
-
-<script>
- 
-      document.addEventListener('DOMContentLoaded', function () {
-      const buttons = document.querySelectorAll('[data-bs-toggle="modal"]');
-      buttons.forEach(button => {
-        button.addEventListener('click', function () {
-          const productId = this.getAttribute('data-id');
-          const productIdElement = document.getElementById('product_stock_product_id');
-          if (productIdElement) {
-            productIdElement.value = productId;
-            console.log("hii")
-          }
-        });
-      });
-    });
-
-</script>
-
-<!--  -->
 
 

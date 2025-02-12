@@ -52,3 +52,7 @@ form{
 .field_with_errors{
   display: inline;
 }
+::placeholder {
+  color: gray;
+  opacity: 1; /* Firefox */
+}
