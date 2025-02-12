@@ -51,7 +51,7 @@ class UsersController < ApplicationController
       if user.admin?
         redirect_to users_path, notice: "User Updated Successfully"
       else
-        redirect_to home_users_path, notice: "User Updated Successfully"
+        redirect_to root_path, notice: "User Updated Successfully"
       end
     else
       flash.now[:alert] = @user.errors.full_messages.to_sentence

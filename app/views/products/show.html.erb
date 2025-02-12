@@ -1,6 +1,6 @@
 <%= stylesheet_link_tag "product.css", "data-turbo-track": "reload"%>
 
-<div class="main bg-light px-5 ">
+<div class="main product bg-light px-5 ">
     <div class="hero px-5 m-300">
         <div class="row p-5 h-600 bg-white ">
             <div class="col-md-5">
@@ -23,8 +23,14 @@
                         &#8377;<%= @product.price %>
                     </div>
                     <div class="fs-4 mt-5 fw-semibold py-3 d-flex gap-3">
-                        <div class="w-25 py-1 bg-secondary rounded-pill text-center text-white">
-                            Add To Cart
+                        <div>
+                            <%= form_for CartItem.new do |f| %>
+                                <%= f.hidden_field :user_id, value: current_user.id if user_signed_in? %>
+                                <%= f.hidden_field :quantity, value: 1 %>
+                                <%= f.hidden_field :product_id, value: @product.id %>
+                                <%= f.submit "Add To Cart", class: "w-100 py-1 px-5 bg-secondary rounded-pill text-center text-white border-0 fw-medium"%>
+                            <% end %>
+                            
                         </div>
                         <div class="w-25 py-1 text-white bg-primary text-center rounded-pill">
                             Buy Now
