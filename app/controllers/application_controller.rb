@@ -9,9 +9,4 @@ class ApplicationController < ActionController::Base
     flash[:alert] = 'Not Authorized'
     redirect_to root_path
   end
-
-  def after_sign_in_path_for(resource)
-    home_users_path
-  end
-
 end

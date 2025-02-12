@@ -70,6 +70,11 @@ class UsersController < ApplicationController
   end
 
   def home
+    @products = Product.all
+    @electronics = Category.find_by(name: "Electronics").products
+    @skin_cares = Category.find_by(name: "Skin Care").products
+    @home_decors = Category.find_by(name: "Home Decors").products
+    @categories = Category.all
     if user_signed_in?
       render :home
       return

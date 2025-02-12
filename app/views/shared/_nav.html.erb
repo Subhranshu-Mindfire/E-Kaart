@@ -1,14 +1,14 @@
-<nav class="navbar navbar-light bg-light justify-content-between py-2">
+<nav class="navbar navbar-light bg-primary justify-content-between py-3">
   <!-- Logo or Branding -->
   <span class="navbar-brand ms-4">
-    <%= link_to 'Ekaart App', home_users_path, class: "text-decoration-none text-secondary" %>
+    <%= link_to 'Ekaart App', home_users_path, class: "text-decoration-none text-white" %>
   </span>
   
   <!-- Navbar Content: Links and User Info -->
-  <div class="d-flex align-items-center">
-     <%= form_tag products_path, method: :get do %>
+  <div class="d-flex align-items-center rounded-pill">
+     <%= form_tag root_path, method: :get, html: {class: "rounded-pill"} do %>
     <div class="input-group bg-white">
-      <%= text_field_tag :search, params[:search], placeholder: "Search products", class: "form-control border-0", name: "search" %>
+      <%= text_field_tag :search, params[:search], placeholder: "Search for products", class: "form-control border-0", name: "search" %>
       
         <button class="btn btn-outline-success border-0" type="submit">
           Search
@@ -19,7 +19,7 @@
 
     <% if user_signed_in? %>
       <!-- Display Welcome Message -->
-      <span class="px-3 fs-5">
+      <span class="px-3 fs-6 fw-semibold text-white">
         Welcome, <%= current_user.first_name %>
       </span>
        
@@ -27,7 +27,7 @@
       <!-- Admin Dropdown: Visible only if the user is an admin -->
       <% if current_user.admin? %>
         <div class="dropdown mx-2">
-          <button class="btn btn-secondary dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <button class="btn btn-primary dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Admin Options
           </button>
           <ul class="dropdown-menu">
@@ -42,7 +42,7 @@
       <% end %>
        <% if current_user.owner? %>
        <div class="dropdown mx-2">
-          <button class="btn btn-secondary dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <button class="btn btn-primary dropdown-toggle fw-semibold" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Owner Options
           </button>
           <ul class="dropdown-menu">
@@ -56,7 +56,7 @@
 
       <!-- User Profile Dropdown -->
       <div class="dropdown mx-3 me-5">
-        <button class="btn btn-secondary dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <button class="btn btn-primary fw-semibold dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           My Profile
         </button>
         <ul class="dropdown-menu">
@@ -68,8 +68,8 @@
     
     <% else %>
       <!-- If the user is not signed in, show sign-in and sign-up links -->
-      <%= link_to 'Sign In', user_session_path, class: "mx-1 btn btn-outline-primary" %>
-      <%= link_to 'Sign Up', new_user_registration_path, class: "mx-1 btn btn-outline-primary" %>
+      <%= link_to 'Sign In', user_session_path, class: "mx-1 btn btn-primary" %>
+      <%= link_to 'Sign Up', new_user_registration_path, class: "mx-1 btn btn-primary" %>
     <% end %>
     
   </div>

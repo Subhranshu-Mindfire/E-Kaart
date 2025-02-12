@@ -19,12 +19,14 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "home#index"
 
+  get '/home/categories/:id', to: 'home#categories', as: "home_category"
+
   # get '/users', to: 'users#index'
 
   # put '/users/:id/edit', to: 'users#edit', as: :edit_user
   resources :users do
     collection do
-      get '/home', to: 'users#home'
+      get '/home', to: 'users#home' 
     end
     member do
       get '/products', to: 'users#products'

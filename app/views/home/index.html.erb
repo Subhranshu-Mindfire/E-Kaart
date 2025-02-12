@@ -1,35 +1,162 @@
-<section id="hero" class="hero section"></section>
-
-      <div class="container" >
-
-        <div class="row align-items-center ">
-          <div class="col-lg-6">
-            <div class="hero-content">
-              <%# =
-              <!-- binding.pry -->
-               <!-- %> 
-
-              <h1 class="mb-4">
-                From the Latest Trends to Timeless Classics - Find Everything You Need, All in One Place
-              </h1>
-
-              <p class="mb-4 mb-md-5">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus ipsa illum labore dolores doloribus velit omnis, ut explicabo a voluptas impedit aliquam. Doloremque veniam magni harum velit cum voluptatem ipsam magnam, rem sunt doloribus itaque, quibusdam distinctio ratione cupiditate unde animi accusantium rerum praesentium veritatis?
-              </p>
-
-              <% unless current_user %>
-                  <div class="hero-buttons">
-                  <%= link_to 'Get Started', new_user_registration_path, class: "btn btn-primary me-0 me-sm-2 mx-1" %>
-                </div>
-              <% end %>
-            </div>
+<%= stylesheet_link_tag 'home.css' %>
+<%# = javascript_include_tag 'home.js' %>
+<div class="home bg-light row px-5">
+  <div class="left col-md-2">
+    <!-- <div id="html1"> -->
+        <!-- <ul> -->
+          <!-- <li>Root node 1</li> -->
+          <!-- <li>Root node 2</li> -->
+          <!-- <li class="jstree-open" id="node_1">Root -->
+            <!-- <ul> -->
+              <!-- <li> -->
+                <!-- <a href="#" class="jstree-clicked">Child</a> -->
+              <!-- </li> -->
+            <!-- </ul> -->
+          <!-- </li> -->
+        <!-- </ul> -->
+      <!--  -->
+    <!-- </div> -->
+    <div class="">
+      <div class="my-4 fs-4 fw-medium">
+        Categories
+      </div>
+      <% @categories.each_with_index do |category,i| %>
+        <% if !category.subcategories.blank? %>
+            <div>
+              <div class="accordion" id="accordionExample">
+                  <div class="accordion-item">
+                      <div class="accordion-header d-flex rounded-1">
+                        <div class="my-auto ms-3 w-75">
+                          <%= link_to home_category_path(category.id) do %>
+                            <%= category.name %>
+                          <% end %>
+                        </div>
+                        <div>
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= i %>" aria-expanded="true" aria-controls="collapseOne">
+                            
+                        </button>
+                        </div>
+                      </div>
+                      <div id="collapse<%= i %>" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                          <% category.subcategories.pluck(:name,:id).each do |item| %>
+                              <div class="accordion-body">
+                              <%= link_to home_category_path(item[1]) do %>
+                                  <%= item[0] %>
+                              <% end %>
+                          </div>
+                          <% end %> 
+                          
+                      </div>
+                  </div>
+              </div>
           </div>
-
-          <div class="col-lg-6">
-            <div class="hero-image">
-              <%= image_tag("ecommerce.jpeg", class: "img-fluid") %>
-            </div>
+          <% elsif !category.parent %>
+          <div class="w-100 bg-white p-3 fs-6 rounded-1 border">
+            <%= link_to home_category_path(category.id) do %>
+                <%= category.name %>
+            <% end %>
+          </div>
+          <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="right col-md-10">
+    <div class="car pe-5 pt-5">
+      <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active" data-bs-interval="2000">
+            <!-- <img src="..." class="d-block w-100" alt="..."> -->
+            <%= image_tag 'car2.webp', class: "d-block w-100" %>
+          </div>
+          <div class="carousel-item" data-bs-interval="2000">
+            <!-- <img src="..." class="d-block w-100" alt="..."> -->
+            <%= image_tag 'car1.webp', class: "d-block w-100" %>
+          </div>
+          <div class="carousel-item" data-bs-interval="2000">
+            <!-- <img src="..." class="d-block w-100" alt="..."> -->
+            <%= image_tag 'car3.webp', class: "d-block w-100" %>
           </div>
         </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
     </div>
-</section>
+    <div class="categories">
+      <div class="electronics bg-white py-4 my-3">
+        <div class="heading fs-3 ps-5 pb-2">
+          Best Of Electronics
+        </div>
+        <div class="main row mx-5">
+          <% @electronics.each do |item| %>
+            <div class="home-card col-md-3 gap d-flex  align-items-center justify-content-center">
+            <div class="d-flex flex-column justify-content-center">
+              <%= image_tag item.images.first, class:"img-fluid h-300"%>
+              <div class="text-secondary text-center mt-2"><%= item.name %></div>
+              <p class="fs-5 text-semibold text-center">
+                From &#8377;<%= item.price %>
+              </p>
+            </div>
+            </div>
+            
+          <% end %>
+        </div>
+      </div>
+      <div class="electronics bg-white py-4 my-3">
+        <div class="heading fs-3 ps-5 pb-2">
+          Best Of Home Decors
+        </div>
+        <div class="main row mx-5">
+          <% @home_decors.each do |item| %>
+            <div class="home-card col-md-3 gap d-flex  align-items-center justify-content-center">
+            <div class="d-flex flex-column justify-content-center">
+              <%= image_tag item.images.first, class:"img-fluid h-300"%>
+              <div class="text-secondary text-center mt-2"><%= item.name %></div>
+              <p class="fs-5 text-semibold text-center">
+                From &#8377;<%= item.price %>
+              </p>
+            </div>
+            </div>
+            
+          <% end %>
+        </div>
+      </div>
+      <div class="electronics bg-white py-4 my-3">
+        <div class="heading fs-3 ps-5 pb-2">
+          Best Of Skin Care
+        </div>
+        <div class="main row mx-5">
+          <% @skin_cares.each do |item| %>
+            <div class="home-card col-md-3 gap d-flex  align-items-center justify-content-center">
+            <div class="d-flex flex-column justify-content-center">
+              <%= image_tag item.images.first, class:"img-fluid h-300"%>
+              <div class="text-secondary text-center mt-2"><%= item.name %></div>
+              <p class="fs-5 text-semibold text-center">
+                From &#8377;<%= item.price %>
+              </p>
+            </div>
+            </div>
+            
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+ 
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+<script>
+  $('#html1').on("changed.jstree", function (e, data) {
+    console.log(data.selected);
+  });
+  $('#html1').jstree();
+</script>
