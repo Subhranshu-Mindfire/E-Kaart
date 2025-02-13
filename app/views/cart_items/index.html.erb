@@ -3,37 +3,102 @@
 <% unless @cart_items.blank? %>
   <div class="cart bg-light">
     <div class="row">
-      <div class="col-md-9 bg-white">
+      <div class="fs-3 mb-3">
+        Cart
+      </div>
+      <div class="col-md-9 ">
         <% @cart_items.each do |cart_item| %>
-          <div class="shadow">
+          <div class="shadow bg-white">
             <div class="row p-4">
               <div class="col-md-3">
                 <%= image_tag Product.find(cart_item["product_id"]).images.first, class: "h-300" %>
               </div>
               <div class="col-md-6">
-                <div>
+                <div class="fs-4">
                   <%= Product.find(cart_item["product_id"]).name %>
                 </div>
                 <div class="text-secondary">
                   <%= Product.find(cart_item["product_id"]).description  %>
                 </div>
-                <div class="secondary">
-                  <%= cart_item["quantity"] %>
+                <div class="d-flex align-items-center text-secondary mt-3">
+                  <span class="fs-6 fw-medium">Quantity :</span>
+                    <% if user_signed_in? %>
+                      <%= link_to '-', decrement_cart_item_path(cart_item.id), class: "btn text-secondary", data: { turbo_method: :patch } %>
+                    <% else %>
+                      <%= link_to '-', decrement_cart_item_path(@cart_items.index(cart_item)), class: "btn text-secondary", data: { turbo_method: :patch } %>
+                    <% end %>
+                    <div class="secondary mx-3 fs-6">
+                      <%= cart_item["quantity"] %>
+                    </div>
+                    
+                    <% if user_signed_in? %>
+                      <%= link_to '+', increment_cart_item_path(cart_item.id), class: "btn text-secondary", data: { turbo_method: :patch } %>
+                    <% else %>
+                      <%= link_to '+', increment_cart_item_path(@cart_items.index(cart_item)), class: "btn text-secondary", data: { turbo_method: :patch } %>
+                    <% end %>
+                    
+                    
+                </div>
+                <div class="mt-4">
+                  <% if user_signed_in? %>
+                    <%= link_to 'Remove From Cart', cart_item_path(cart_item.id), class: "btn btn-orange", data: {turbo_method: :delete} %>
+                  <% else %>
+                     <%= link_to 'Remove Item', cart_item_path(@cart_items.index(cart_item)), class: "btn btn-orange", data: {turbo_method: :delete} %>
+                  <% end %>
                 </div>
               </div>
-              <div class="col-md-2">
-
+              <div class="col-md-3">
+                <i class="bi bi-check-circle-fill text-success"></i>
+                Deliver By <%= (Date.current + 7.day).strftime("%B %d")
+ %>
               </div>
             </div>
           </div>
         <% end %>
       </div>
-      <div class="col-md-3 bg-white h-auto">
-        <div class="p-3">
-          <div class="price-heading text-secondary border-bottom border-secondary">
+      <div class="col-md-3  h-auto">
+        <div class="p-3 bg-white shadow">
+          <div class="price-heading border-bottom border-secondary">
             Price Details
           </div>
+          <div class="mt-2" >
+            <% @cart_items.each do |cart_item| %>
+             <div class="d-flex my-3 justify-content-between text-secondary">
+               <div>
+                <%= Product.find(cart_item["product_id"]).name %> x 
+              <%= cart_item["quantity"] %>
+               </div>
+              
+              <div class="ms-3">
+                &#8377;<%= Product.find(cart_item["product_id"]).price * cart_item["quantity"].to_i %>
+              </div>
+             </div>
+            <% end %>
+            <div class="delivery mt-4 border-bottom border-dark pb-3">
+              <div class="d-flex justify-content-between text-secondary">
+                Delivery Charges
+                <div>
+                  &#8377; 50.0
+                </div>
+              </div>
+            </div>
+            <div class="delivery mt-4 border-bottom border-dark pb-3">
+              <div class="d-flex justify-content-between fw-medium">
+                Total
+                <div>
+                  &#8377; <%= @total + 50 %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end">
+            <div class="btn btn-primary mt-4">
+              Order Now
+            </div>
+          </div>
+          
         </div>
+        
       </div>
     </div>
   </div>

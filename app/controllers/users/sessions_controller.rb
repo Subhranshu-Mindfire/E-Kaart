@@ -17,10 +17,12 @@ class Users::SessionsController < Devise::SessionsController
       redirect_to new_user_session_path, notice: "Your Status Is Inactive !!! Contact Support" 
     else
       super
-      session[:cart_items].each do |cart_item|
-        CartItem.create(cart_item.merge(user_id: current_user.id))
+      unless session[:cart_items].blank?
+        session[:cart_items].each do |cart_item|
+         CartItem.create(cart_item.merge(user_id: current_user.id))
+        end
+        session[:cart_items] = []
       end
-      session[:cart_items] = []
     end
   end
 
