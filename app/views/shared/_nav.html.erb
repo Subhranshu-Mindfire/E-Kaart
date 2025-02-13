@@ -6,14 +6,33 @@
   
   <!-- Navbar Content: Links and User Info -->
   <div class="d-flex align-items-center rounded-pill">
-     <%= form_tag root_path, method: :get, html: {class: "rounded-pill"} do %>
-    <div class="input-group bg-white">
-      <%= text_field_tag :search, params[:search], placeholder: "Search for products", class: "form-control border-0", name: "search" %>
-        <button class="btn btn-outline-success border-0" type="submit">
-          Search
-        </button>
-    </div>
-  <% end %> 
+    <%= form_tag root_path, method: :get, html: {class: "rounded-pill"} do %>
+      <div class="input-group bg-white">
+        <%= text_field_tag :search, params[:search], placeholder: "Search for products", class: "form-control border-0", name: "search" %>
+          <button class="btn btn-outline-success border-0" type="submit">
+            Search
+          </button>
+      </div>
+    <% end %> 
+
+   <div class="mx-4">
+     <%= link_to cart_items_path do %>
+      <button type="button" class="btn btn-primary position-relative">
+        Cart <i class="bi bi-cart-fill text-white position-relative fs-5">
+          <% if current_user and current_user.cart_items.count != 0 %>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-danger fst-normal" style="font-size: 10px"><%= current_user.cart_items.count %>
+          </span>
+          <% end %>
+          <% unless session[:cart_items].blank? %>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-danger fst-normal" style="font-size: 10px"><%= session["cart_items"].count %>
+          </span>
+          <% end %>
+        </i> 
+        
+      </button>
+    <% end %>
+   </div>
+    
 
     <% if user_signed_in? %>
       <!-- Display Welcome Message -->
@@ -66,8 +85,22 @@
     
     <% else %>
       <!-- If the user is not signed in, show sign-in and sign-up links -->
-      <%= link_to 'Sign In', user_session_path, class: "mx-1 btn btn-primary" %>
-      <%= link_to 'Sign Up', new_user_registration_path, class: "mx-1 btn btn-primary" %>
+      <%= link_to user_session_path, class: "mx-1 btn btn-primary" do %>
+      <div class="mx-2 text-white">
+        <span>Sign In</span>
+        <i class="bi bi-box-arrow-in-right"></i>
+      </div>
+      <% end %>
+      
+      <%= link_to new_user_registration_path, class: "mx-1 btn btn-primary"  do %>
+
+      <div class="mx-2 text-white">
+        <span>Sign Up</span>
+        <i class="bi bi-person-plus-fill"></i>
+      </div>
+      
+      <% end %>
+      
     <% end %>
     
   </div>

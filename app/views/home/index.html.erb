@@ -128,7 +128,7 @@
         </div>
         <div class="main row mx-5">
           <% @products.each do |item| %>
-            <%= link_to product_path(item.id), class:"col-md-3" do %>
+            <%= link_to see_product_category_path(Category.find_by(name: @name).id, item.id), class:"col-md-3" do %>
               <div class="home-card  gap d-flex  align-items-center justify-content-center">
                 <div class="d-flex flex-column justify-content-center">
                   <%= image_tag item.images.first, class:"img-fluid h-300"%>
@@ -176,16 +176,17 @@
         </div>
         <div class="main row mx-5">
           <% @electronics.each do |item| %>
-            <div class="home-card col-md-3 gap d-flex  align-items-center justify-content-center">
-            <div class="d-flex flex-column justify-content-center">
-              <%= image_tag item.images.first, class:"img-fluid h-300"%>
-              <div class="text-secondary text-center mt-2"><%= item.name %></div>
-              <p class="fs-5 text-semibold text-center">
-                From &#8377;<%= item.price %>
-              </p>
-            </div>
-            </div>
-            
+            <%= link_to product_path(item.id), class:"col-md-3" do %>
+              <div class="home-card gap d-flex  align-items-center justify-content-center">
+                <div class="d-flex flex-column justify-content-center">
+                  <%= image_tag item.images.first, class:"img-fluid h-300"%>
+                  <div class="text-secondary text-center mt-2"><%= item.name %></div>
+                  <p class="fs-5 text-semibold text-center">
+                    From &#8377;<%= item.price %>
+                  </p>
+                </div>
+              </div>
+            <% end %>
           <% end %>
         </div>
       </div>
@@ -195,16 +196,17 @@
         </div>
         <div class="main row mx-5">
           <% @home_decors.each do |item| %>
-            <div class="home-card col-md-3 gap d-flex  align-items-center justify-content-center">
-            <div class="d-flex flex-column justify-content-center">
-              <%= image_tag item.images.first, class:"img-fluid h-300"%>
-              <div class="text-secondary text-center mt-2"><%= item.name %></div>
-              <p class="fs-5 text-semibold text-center">
-                From &#8377;<%= item.price %>
-              </p>
-            </div>
-            </div>
-            
+            <%= link_to product_path(item.id), class:"col-md-3" do %>
+              <div class="home-card gap d-flex  align-items-center justify-content-center">
+                  <div class="d-flex flex-column justify-content-center">
+                    <%= image_tag item.images.first, class:"img-fluid h-300"%>
+                    <div class="text-secondary text-center mt-2"><%= item.name %></div>
+                    <p class="fs-5 text-semibold text-center">
+                      From &#8377;<%= item.price %>
+                    </p>
+                  </div>
+              </div>
+            <% end %>
           <% end %>
         </div>
       </div>
@@ -214,16 +216,17 @@
         </div>
         <div class="main row mx-5">
           <% @skin_cares.each do |item| %>
-            <div class="home-card col-md-3 gap d-flex  align-items-center justify-content-center">
-            <div class="d-flex flex-column justify-content-center">
-              <%= image_tag item.images.first, class:"img-fluid h-300"%>
-              <div class="text-secondary text-center mt-2"><%= item.name %></div>
-              <p class="fs-5 text-semibold text-center">
-                From &#8377;<%= item.price %>
-              </p>
-            </div>
-            </div>
-            
+            <%= link_to product_path(item.id), class:"col-md-3" do %>
+              <div class="home-card gap d-flex  align-items-center justify-content-center">
+                <div class="d-flex flex-column justify-content-center">
+                  <%= image_tag item.images.first, class:"img-fluid h-300"%>
+                  <div class="text-secondary text-center mt-2"><%= item.name %></div>
+                  <p class="fs-5 text-semibold text-center">
+                    From &#8377;<%= item.price %>
+                  </p>
+                </div>
+              </div>
+            <% end %>
           <% end %>
         </div>
       </div>

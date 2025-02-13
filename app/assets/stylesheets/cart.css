@@ -1,3 +1,13 @@
 .cart .row{
   padding: 20px 300px;
 }
+
+.btn-orange{
+  background-color: orangered;
+  color: aliceblue;
+}
+
+.btn-orange:hover{
+  background-color: rgb(255, 83, 9) !important;
+  color: rgb(255, 255, 255) !important;
+}

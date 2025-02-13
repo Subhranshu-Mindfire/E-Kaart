@@ -17,33 +17,31 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   # Defines the root path route ("/")
+
   root "home#index"
 
-  # get '/users', to: 'users#index'
-
-  resources :cart_items, path: :cart
-  # put '/users/:id/edit', to: 'users#edit', as: :edit_user
-  resources :users do
-    collection do
-      get '/home', to: 'users#home' 
+  resources :cart_items, path: :cart, only: [:index, :create, :destroy] do
+    member do
+      patch '/increment', to: 'cart_items#increment'
+      patch '/decrement', to: 'cart_items#decrement'
     end
+  end
+  resources :users do
     member do
       get '/products', to: 'users#products'
     end
   end
-
-  
-
   resources :roles
-
   resources :products do
     member do
       get '/product_stock', to: 'products#product_stocks'
     end
   end 
-
-  resources :categories
+  resources :categories do
+    member do
+      get '/product/:id', to: 'products#show', as: :see_product
+    end
+  end
   resources :product_stocks, only: [:index, :update, :create, :destroy, :edit]
 
-  # post '/add_stock', to: 'stocks#create'
 end
