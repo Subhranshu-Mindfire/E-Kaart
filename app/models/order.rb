@@ -2,7 +2,7 @@ class Order < ApplicationRecord
   belongs_to :user
   belongs_to :product
 
-  enum order_status: {
+  enum status: {
     placed: 0,
     accepted: 1,
     shipped: 2,

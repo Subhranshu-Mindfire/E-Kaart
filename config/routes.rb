@@ -18,9 +18,10 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
 
-  root "home#index"
+  root "home#index" 
 
   resources :users do
+    resources :orders
     member do
       get '/products', to: 'users#products'
     end

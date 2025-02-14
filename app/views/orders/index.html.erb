@@ -1,9 +1,9 @@
 <%= stylesheet_link_tag 'order.css' %>
-<div class="orders bg-light">
+<div class="owner-orders bg-light px-5 mx-5">
   <div class="fs-2">
-    My Orders
+    Orders
   </div>
-  <% @my_orders.each do |order| %>
+  <% @orders.each do |order| %>
     <div class="row bg-white shadow my-4 fs-5 text-center">
       <div class="col-md-2">
         <%= image_tag order.product.images.first, class: "h-300 py-2" %>
@@ -26,12 +26,15 @@
         <div class="fs-6 m-auto">
           <%= order.address %>
         </div>
-        <% unless order.delivered? %>
-          <%= link_to 'Cancel ',{}, class: "btn btn-danger m-auto" %>
-        <% else %>
-          <%= link_to 'Review'%>
-        <% end %>
-      </div>
+          <div >
+            <%= form_for order, url: user_order_path(current_user,order), data: { method: :patch }, html:{
+              class: "d-flex flex-row justify-content-between"
+            } do |f| %>
+            <%= f.select :status, options_for_select(Order.statuses.map { |status, value| [status.to_s.humanize, status.to_s]}, selected: [order[:status]]), class: "form-control",onchange: 'this.form.submit()' %>
+            <%= f.submit class: "btn btn-sm btn-primary ms-3"%>
+          <% end %>
+          </div>
+         
     </div>
   <% end %>
 </div>
