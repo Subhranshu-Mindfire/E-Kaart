@@ -92,9 +92,10 @@
             </div>
           </div>
           <div class="d-flex justify-content-end">
-            <div class="btn btn-primary mt-4">
-              Order Now
-            </div>
+            <!-- <div class="btn btn-primary mt-4"> -->
+              <!-- Order Now -->
+            <!-- </div> -->
+            <%= link_to 'Order Now', create_order_path, data: {turbo_method: :post}, class: "btn btn-primary mt-4" %>
           </div>
           
         </div>
