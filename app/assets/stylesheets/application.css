@@ -29,7 +29,6 @@
   border-radius: 20px;
 }
 
-
 form{
   height: 100%;
   display: flex;
@@ -52,6 +51,7 @@ form{
 .field_with_errors{
   display: inline;
 }
+
 ::placeholder {
   color: gray;
   opacity: 1; /* Firefox */

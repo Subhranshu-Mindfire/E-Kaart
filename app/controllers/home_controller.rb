@@ -15,12 +15,5 @@ class HomeController < ApplicationController
       @home_decors = Category.find_by(name: "Home Decors").products
       @categories = Category.all
     end
-    
-  end
-
-  def categories
-    @name = Category.find(params[:id]).name
-    @products = Category.find(params[:id]).products
-    @categories = Category.all
   end
 end

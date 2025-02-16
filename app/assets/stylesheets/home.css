@@ -1,20 +1,25 @@
 .car{
   margin: 0px 100px;
 }
+
 .categories{
   margin: 20px 100px;
 }
+
 .h-300{
   height: 200px;
 }
+
 .h-400{
   height: 300px;
 }
+
 .home-card{
   transition-property: scale;
   transition-duration: 0.5s;
   height: 300px;
 }
+
 .home-card:hover{
   scale: 1.05;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;

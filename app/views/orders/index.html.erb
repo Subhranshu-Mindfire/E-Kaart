@@ -3,39 +3,46 @@
   <div class="fs-2">
     Orders
   </div>
-  <% @orders.each do |order| %>
-    <div class="row bg-white shadow my-4 fs-5 text-center">
-      <div class="col-md-2">
-        <%= image_tag order.product.images.first, class: "h-300 py-2" %>
-      </div>
-      <div class="col-md-3 m-auto">
-        <%= order.product.name %>  x  <%= order.quantity %>
-      </div>
-      <div class="col-md-1 m-auto">
-        &#8377;<%= order.price %>
-      </div>
-      <div class="col-md-3 fs-6 m-auto">
-        <% if order.placed? %>
-          <i class="bi bi-check-circle-fill text-warning"></i>
-        <% elsif order.accepted? %>
-        <i class="bi bi-check-circle-fill text-success"></i>
-        <% end %>
-        <%= order.status.humanize %> On <%= order.updated_at.strftime("%B %d") %>
-      </div>
-      <div class="col-md-3 d-flex justify-content-between">
-        <div class="fs-6 m-auto">
-          <%= order.address %>
-        </div>
-          <div >
-            <%= form_for order, url: user_order_path(current_user,order), data: { method: :patch }, html:{
-              class: "d-flex flex-row justify-content-between"
-            } do |f| %>
-            <%= f.select :status, options_for_select(Order.statuses.map { |status, value| [status.to_s.humanize, status.to_s]}, selected: [order[:status]]), class: "form-control",onchange: 'this.form.submit()' %>
-            <%= f.submit class: "btn btn-sm btn-primary ms-3"%>
-          <% end %>
+  <% @orders.each do |items| %>
+    <div class="bg-white px-3 p-1 shadow my-3">
+      <% items.order_items.each do |order| %>
+        <% if current_user.product_ids.include?(order.product_id) %>
+          <div class="row my-4 fs-5 text-center">
+            <div class="col-md-2">
+              <%= image_tag order.product.images.first, class: "h-300 py-2" %>
+            </div>
+            <div class="col-md-2 m-auto">
+              <%= order.product.name %>  x  <%= order.quantity %>
+            </div>
+            <div class="col-md-1 m-auto">
+              &#8377;<%= order.price %>
+            </div>
+            <div class="col-md-2 fs-6 m-auto">
+              <% if order.placed? %>
+                <i class="bi bi-check-circle-fill text-warning"></i>
+              <% elsif order.accepted? %>
+              <i class="bi bi-check-circle-fill text-success"></i>
+              <% end %>
+              <%= order.status.humanize %> On <%= order.updated_at.strftime("%B %d") %>
+            </div>
+            <div class="col-md-2 d-flex justify-content-between">
+              <div class="fs-6 m-auto">
+                <%= order.address %>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <%= form_for order, url: user_order_item_path(current_user,order), data: { method: :patch }, html:{
+                class: "d-flex flex-row justify-content-evenly"
+              } do |f| %>
+              <%= f.select :status, options_for_select(OrderItem.statuses.map { |status, value| [status.to_s.humanize, status.to_s]}, selected: [order[:status]]), class: "form-control",onchange: 'this.form.submit()' %>
+              <%= f.submit class: "btn btn-sm btn-primary ms-3"%>
+              <% end %>
+            </div>
           </div>
-         
+        <% end %>
+      <% end %>
     </div>
   <% end %>
 </div>
+
 

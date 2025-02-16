@@ -22,6 +22,7 @@ Rails.application.routes.draw do
 
   resources :users do
     resources :orders
+    resources :order_items, only: [:update]
     member do
       get '/products', to: 'users#products'
     end

@@ -69,24 +69,8 @@ class UsersController < ApplicationController
     end
   end
 
-  def home
-    @products = Product.all
-    @electronics = Category.find_by(name: "Electronics").products
-    @skin_cares = Category.find_by(name: "Skin Care").products
-    @home_decors = Category.find_by(name: "Home Decors").products
-    @categories = Category.all
-    if user_signed_in?
-      render :home
-      return
-    else
-      redirect_to root_path
-      return
-    end
-  end
-
   def products
     @products = Product.where(user_id: current_user.id)
-    # authorize @products
     @stock={}
     @products.each do |product|
       @stock[product] = product.product_stocks.where(transaction_type: 1).pluck(:quantity).sum - product.product_stocks.where(transaction_type: 0).pluck(:quantity).sum
