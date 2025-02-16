@@ -4,7 +4,6 @@ $('#jstree_demo_div').on("changed.jstree", function (e, data) {
   console.log(data.selected);
 });
 $('#jstree').jstree();
-console.log("Hii")
 $('#jstree').jstree({
   "plugins": ["wholerow", "checkbox"]
 });

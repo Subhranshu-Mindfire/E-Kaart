@@ -3,31 +3,40 @@
   <div class="fs-2">
     My Orders
   </div>
-  <% @my_orders.each do |order| %>
-    <div class="row bg-white shadow my-2 fs-5">
-      <div class="col-md-2">
-        <%= image_tag order.product.images.first, class: "h-300 py-2" %>
-      </div>
-      <div class="col-md-3 m-auto">
-        <%= order.product.name %>  x  <%= order.quantity %>
-      </div>
-      <div class="col-md-1 m-auto">
-        <%= order.price %>
-      </div>
-      <div class="col-md-3 fs-6 m-auto">
-        <%= order.order_status.humanize %> On <%= order.updated_at.strftime("%B %d") %>
-        <% if order.placed? %>
-          <i class="bi bi-check-circle-fill text-success"></i>
-        <% end %>
-      </div>
-      <div class="col-md-2 m-auto">
-        <% unless order.delivered? %>
-          <%= link_to 'Cancel Order',{}, class: "btn btn-danger m-auto" %>
-        <% else %>
-          <%= link_to 'Review'%>
-        <% end %>
-      </div>
+  <% @my_orders.each do |items| %>
+    <div class="bg-white px-3 p-1 shadow my-3">
+      <% items.order_items.each do |order| %>
+        <div class="row my-4 fs-5 text-center">
+          <div class="col-md-2">
+            <%= image_tag order.product.images.first, class: "h-300 py-2" %>
+          </div>
+          <div class="col-md-3 m-auto">
+            <%= order.product.name %>  x  <%= order.quantity %>
+          </div>
+          <div class="col-md-1 m-auto">
+            &#8377;<%= order.price %>
+          </div>
+          <div class="col-md-3 fs-6 m-auto">
+            <% if order.placed? %>
+              <i class="bi bi-check-circle-fill text-warning"></i>
+            <% elsif order.accepted? %>
+            <i class="bi bi-check-circle-fill text-success"></i>
+            <% end %>
+            <%= order.status.humanize %> On <%= order.updated_at.strftime("%B %d") %>
+          </div>
+          <div class="col-md-3 d-flex justify-content-between">
+            <div class="fs-6 m-auto">
+              <%= order.address %>
+            </div>
+            <% unless order.delivered? %>
+              <%= link_to 'Cancel ',{}, class: "btn btn-danger m-auto" %>
+            <% else %>
+              <%= link_to 'Review'%>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
     </div>
-  <% end %>
+    <% end %>
 </div>
 
