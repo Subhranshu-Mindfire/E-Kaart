@@ -31,13 +31,13 @@
                     <%= role.description %>
                 </td>                                                          
                 <td>
-                    <%= link_to role_path(role),class:"btn btn-outline-primary" do %>
+                    <%= link_to admin_role_path(role),class:"btn btn-outline-primary" do %>
                         <i class="bi bi-eye-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Show Role"></i>
                     <% end %>
-                    <%= link_to edit_role_path(role),class:"btn btn-outline-dark"  do %>
+                    <%= link_to edit_admin_role_path(role),class:"btn btn-outline-dark"  do %>
                         <i class="bi bi-pen-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Role"></i>
                     <% end %>
-                    <%= link_to role_path(role), data: { turbo_method: :delete, turbo_confirm: 'Are you sure to delete the role?' },class:"btn btn-outline-danger" do %>
+                    <%= link_to admin_role_path(role), data: { turbo_method: :delete, turbo_confirm: 'Are you sure to delete the role?' },class:"btn btn-outline-danger" do %>
                         <i class="bi bi-trash-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Role"></i>
                     <% end %>
                    
@@ -49,5 +49,5 @@
 </table>
 
 <div align="center" class="mt-4">
-    <%= link_to 'Add Another', new_role_path,class:"btn btn-outline-success" %>
+    <%= link_to 'Add Another', new_admin_role_path,class:"btn btn-outline-success" %>
 </div>

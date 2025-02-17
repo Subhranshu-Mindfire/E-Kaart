@@ -20,7 +20,7 @@ Rails.application.routes.draw do
 
   root "products#index" 
 
-  resources :users do
+  resources :users, except: [:new, :create] do
     resources :orders
     resources :order_items, only: [:update]
     member do
@@ -28,7 +28,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :roles
+  namespace :admin do
+    resources :roles
+  end
 
   namespace :admin do
     resources :products, only: [:index]
