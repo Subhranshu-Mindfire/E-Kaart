@@ -1,0 +1,110 @@
+<%= stylesheet_link_tag "users.css", "data-turbo-track": "reload"%>
+<%= javascript_include_tag "product_modal.js", "data-turbo-track": "reload"%>
+
+<div align="center" class="mt-4">
+   
+</div>
+
+
+<% unless @title %>
+  <h1 align="center" class="my-4 pt-5">Registered Product List</h1>
+<% else %>
+  <h1 align="center" class="my-4 pt-5">Search Results for "<%= @title %>"</h1>
+<% end %>
+<table align="center" class="shadow" id="table">
+    <tr class="border-bottom">
+        <th>
+          Seriel No
+        </th>
+        <th class="w-200px">
+           Image
+        </th>
+        <th>
+          Name
+        </th>
+        <th>
+          Price
+        </th>
+        <th>
+          Category
+        </th>
+        <th>
+          Owner
+        </th>
+        <th>
+          Stock Available
+        </th>
+        <th>
+          Actions
+        </th>
+    </tr>
+
+    <% @products.each_with_index do |product,i| %>
+      <tr class="shadow-sm">
+        <div class="row ">
+          <td>
+              <%= i+1 %>
+          </td>
+          <td class="d-flex justify-content-center ">
+              <%#  product.images.each do |item| %>
+                <%= image_tag product.images.first, class:"img-fluid w-75"%>
+              <%#  end %>
+          </td>
+          <td>
+              <%= product.name %>
+          </td>
+          <td>&#8377;<%= product.price %></td>
+          <td><%= product.categories.map{|category| category.name}.join(",") %></td>      
+          <td><%= product.user.first_name + " " + product.user.last_name %></td> 
+          <td>
+            <%= link_to @stock[product], product_stock_product_path(product)%>
+          </td>
+          <td>
+              <%= link_to product_path(product),class: "btn btn-lg text-primary" do %>
+                  <i class="bi bi-eye-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Show product"></i>
+              <% end %>
+              <%= link_to edit_product_path(product), class: "btn btn-lg text-dark" do %>
+              <i class="bi bi-pencil-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit product"></i>
+              <% end %>
+              
+              <%= link_to product_path(product), data: { turbo_method: :delete, turbo_confirm: 'Are you sure to delete the product?' }, class: "btn btn-lg text-danger" do %>
+              <i class="bi bi-trash-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete product"></i>
+              <% end %>
+
+<!--  -->
+              <button class="btn btn-lg text-success" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" data-id=<%= product.id %> data-name=<%= product.name %>>
+                <i class="bi-plus-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Stock Opertion"></i>
+              </button>
+          </td>   
+        </div>
+      </tr>
+    <% end %>
+</table>
+
+<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5 text-center" id="exampleModalToggleLabel">Stock Transaction</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <%= form_for ProductStock.new, url: product_stocks_path ,html: {class: "h-65"} do |f|%>
+        <div>
+          <%= f.hidden_field :product_id %>
+          <%= f.label :transaction_type, 'Transaction Type: ', class: "mx-2"%>
+          <%= f.select :transaction_type, options_for_select(ProductStock.transaction_types.map { |type, value| [type.to_s.humanize, type.to_s]}), {},class: "form-select"%>
+          <br>
+          <%= f.number_field :quantity, placeholder: "Quantity", class:"form-control mb-4"%>
+        </div>
+        <div class="d-flex flex-column align-items-center my-4 gap-3">
+          <%= f.submit "Submit", class: "btn btn-primary "%>
+        </div>
+        </div>
+      <%end%>
+      
+    </div>
+  </div>
+</div>
+
+
+

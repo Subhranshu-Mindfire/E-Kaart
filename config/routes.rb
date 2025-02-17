@@ -18,7 +18,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
 
-  root "home#index" 
+  root "products#index" 
 
   resources :users do
     resources :orders
@@ -30,17 +30,27 @@ Rails.application.routes.draw do
 
   resources :roles
 
+  namespace :admin do
+    resources :products, only: [:index]
+  end
+
   resources :products do
     member do
       get '/product_stock', to: 'products#product_stocks'
     end
   end 
 
+  namespace :admin do
+    resources :categories do
+    end
+  end
+
   resources :categories do
     member do
       get '/product/:id', to: 'products#show', as: :see_product
     end
   end
+  
 
   resources :product_stocks, only: [:index, :update, :create, :destroy, :edit]
 

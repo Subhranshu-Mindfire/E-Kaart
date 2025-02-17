@@ -1,4 +1,5 @@
 <%= stylesheet_link_tag 'order.css' %>
+<%= javascript_include_tag 'onchange.js' %>
 <div class="owner-orders bg-light px-5 mx-5">
   <div class="fs-2">
     Orders
@@ -31,11 +32,8 @@
               </div>
             </div>
             <div class="col-md-3">
-              <%= form_for order, url: user_order_item_path(current_user,order), data: { method: :patch }, html:{
-                class: "d-flex flex-row justify-content-evenly"
-              } do |f| %>
-              <%= f.select :status, options_for_select(OrderItem.statuses.map { |status, value| [status.to_s.humanize, status.to_s]}, selected: [order[:status]]), class: "form-control",onchange: 'this.form.submit()' %>
-              <%= f.submit class: "btn btn-sm btn-primary ms-3"%>
+              <%= form_with model: order, url: user_order_item_path(current_user, order), method: :patch, local: true, html: { class: "d-flex flex-row justify-content-evenly", id:"frm" } do |f| %>
+                <%= f.select :status, options_for_select(OrderItem.statuses.map { |status, value| [status.to_s.humanize, status.to_s] }, selected: order[:status]),{ class: "form-control"} %>
               <% end %>
             </div>
           </div>
