@@ -1,24 +1,25 @@
 class ProductsController < ApplicationController
-  before_action :authenticate_user!, except: [:show]
-  
+  before_action :authenticate_user!, except: [:show, :index]
+
   def index
-    # unless params[:search]
+    if params[:search]
+      @products = Product.all.select{|product| product.name.upcase.include?(params[:search].upcase)}
+      @title = params[:search]
+      @categories = Category.all
+    elsif params[:category]
+      @name = Category.find(params[:category]).name
+      @products = Category.find(params[:category]).products
+      @categories = Category.all
+    else
       @products = Product.all.order(created_at: :asc)
-    # else
-    #   @products = Product.all.select{|product| product.name.upcase.include?(params[:search].upcase)}
-    #   @title = params[:search]
-    # end
-    @stock={}
-    
-    @products.each do |product|
-      @stock[product] = product.product_stocks.where(transaction_type: true).pluck(:quantity).sum - product.product_stocks.where(transaction_type: false).pluck(:quantity).sum
+      @electronics = Category.find_by(name: "Electronics").products
+      @skin_cares = Category.find_by(name: "Skin Care").products
+      @home_decors = Category.find_by(name: "Home Decors").products
+      @categories = Category.all
     end
-    
-    authorize Product
   end
   
   def show
-    # authorize 
     product
   end
   

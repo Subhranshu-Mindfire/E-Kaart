@@ -12,7 +12,7 @@ class ProductStocksController < ApplicationController
     @product_stock = ProductStock.new(stock_params)
     if @product_stock.save
       if current_user.admin?
-        redirect_to products_path, notice: "Stock Transaction Successful"
+        redirect_to admin_products_path, notice: "Stock Transaction Successful"
       else
         redirect_to products_user_path(current_user), notice: "Stock Transaction Successful"
       end
