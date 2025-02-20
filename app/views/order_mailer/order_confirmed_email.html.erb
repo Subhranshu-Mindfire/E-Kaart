@@ -1,0 +1,80 @@
+<h3>Hii <%= @user.first_name %>, Greetings From Ekaart </h3>
+<p>
+  We are pleased to inform you that your order is placed successfully 
+</p>
+<p>
+  Here is the summary of your order
+</p>
+<table>
+  <tr>
+    <th>
+      No
+    </th>
+    <th>
+      Image
+    </th>
+    <th>
+      Product Name
+    </th>
+    <th>
+      Quantity
+    </th>
+    <th>
+      Price
+    </th>
+  </tr>
+  <% @order.order_items.each_with_index do |order_item,i| %>
+    <tr>
+      <td>
+        <%= i+1 %>
+      </td>
+      <td>
+        <%= image_tag order_item.product.images.first, class: "h-200" %> 
+      </td>
+      <td>
+        <%= order_item.product.name %>
+      </td>
+      <td>
+        <%= order_item.quantity %>
+      </td>
+      <td style="text-align: right;">
+        &#8377;<%= order_item.quantity*order_item.product.price %>
+      </td>
+    </tr>
+  <% end %>
+  <tr>
+    <td>
+      
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      Delivery Fees
+    </td>
+    <td style="text-align: right;">
+      &#8377;50.0
+    </td>
+  </tr>
+  <tr>
+    <td>
+      
+    </td>
+    <td>
+     
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      <b>Total</b>
+    </td>
+    <td style="text-align: right;">
+      &#8377;<%= @order.order_items.inject(0){|sum, order_item| sum + order_item.product.price * order_item.quantity} + 50 %>
+    </td>
+  </tr>
+</table>
+<p>Thanks for ordering and have a great day!</p>

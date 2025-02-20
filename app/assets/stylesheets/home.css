@@ -1,3 +1,7 @@
+.gray-scale{
+  filter: grayscale(1);
+}
+
 .car{
   margin: 0px 100px;
 }

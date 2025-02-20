@@ -26,8 +26,9 @@
               <% end %>
               <%= order.status.humanize %> On <%= order.updated_at.strftime("%B %d") %>
             </div>
-            <div class="col-md-2 d-flex justify-content-between">
+            <div class="col-md-3 d-flex justify-content-between">
               <div class="fs-6 m-auto">
+                <%= items.user.first_name + " " + items.user.last_name  %> , 
                 <%= order.address %>
               </div>
             </div>

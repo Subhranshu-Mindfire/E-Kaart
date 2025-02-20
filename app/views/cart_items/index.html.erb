@@ -6,6 +6,8 @@
       <div class="fs-3 mb-3">
         Cart
       </div>
+      
+      
       <div class="col-md-9 ">
         <% @cart_items.each do |cart_item| %>
           <div class="shadow bg-white">
@@ -95,7 +97,7 @@
             <!-- <div class="btn btn-primary mt-4"> -->
               <!-- Order Now -->
             <!-- </div> -->
-            <%= link_to 'Order Now', create_order_path, data: {turbo_method: :post}, class: "btn btn-primary mt-4" %>
+            <%= link_to 'Check Out', checkout_path, class: "btn btn-primary mt-4" %>
           </div>
           
         </div>
@@ -106,3 +108,37 @@
 <% else %>
   <h1 class="text-center mt-4">No Items In The Cart</h1>
 <% end %>
+
+
+
+
+
+<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content align-items-center">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5 text-center" id="exampleModalToggleLabel">Add Address</h1>
+        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+      </div>
+      <%= form_for Address.new, url: address_index_path ,html: {class: "h-65 w-75"} do |f|%>
+        <div>
+          <%= f.hidden_field :user_id %>
+          <%= f.text_field :street, class: "form-control mb-2", placeholder: "Street Name" %>
+          <%= f.text_field :city, class: "form-control mb-2", placeholder: "City" %>
+          <%= f.text_field :state, class: "form-control mb-2", placeholder: "State" %>
+          <%= f.text_field :pin_code, class: "form-control mb-2", placeholder: "PIN Code" %>
+          <div class="d-flex justify-content-center gap-2 mt-3">
+            <%= f.check_box :default %>
+            <%= f.label :default, 'Make this your default address', class:"fs-6 text-secondary fw-normal" %>
+          </div>
+          
+        </div>
+        <div class="d-flex flex-column align-items-center my-4 gap-3">
+          <%= f.submit "Submit", class: "btn btn-primary "%>
+        </div>
+        </div>
+      <%end%>
+      
+    </div>
+  </div>
+</div>

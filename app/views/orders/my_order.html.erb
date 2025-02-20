@@ -25,8 +25,11 @@
             <%= order.status.humanize %> On <%= order.updated_at.strftime("%B %d") %>
           </div>
           <div class="col-md-3 d-flex justify-content-between">
-            <div class="fs-6 m-auto">
-              <%= order.address %>
+            <div class="fs-6 text-start m-auto">
+             <b class="">
+               <%= items.address.recipient_name %> <%= items.address.phone_number %> 
+             </b> <br>
+              <%= items.address.street %> <%= items.address.city %> <%= items.address.state %> <%= items.address.pin_code %>
             </div>
             <% unless order.delivered? %>
               <%= link_to 'Cancel ',{}, class: "btn btn-danger m-auto" %>

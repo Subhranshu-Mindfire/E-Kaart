@@ -2,8 +2,10 @@ class UsersController < ApplicationController
   before_action :authenticate_user!, except: [:home]
 
   def index
-    @users = User.all
-    authorize @users    
+    respond_to do |format|
+      format.html
+      format.json { render json: UserDatatable.new(params) }
+    end    
   end
 
   def new

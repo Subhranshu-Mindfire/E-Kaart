@@ -20,7 +20,7 @@ Rails.application.routes.draw do
 
   root "products#index" 
 
-  resources :users do
+  resources :users, except: [:new, :create] do
     resources :orders
     resources :order_items, only: [:update]
     member do
@@ -28,7 +28,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :roles
+  namespace :admin do
+    resources :roles
+  end
 
   namespace :admin do
     resources :products, only: [:index]
@@ -54,6 +56,9 @@ Rails.application.routes.draw do
 
   resources :product_stocks, only: [:index, :update, :create, :destroy, :edit]
 
+  resources :address, only: [:index, :update, :create, :destroy, :edit]
+
+
   resources :cart_items, path: :cart, only: [:index, :create, :destroy] do
     member do
       patch '/increment', to: 'cart_items#increment'
@@ -63,4 +68,5 @@ Rails.application.routes.draw do
 
   get '/orders', to: 'orders#my_order'
   post '/orders', to: 'orders#create', as: "create_order"
+  get '/checkout', to: 'orders#new'
 end
