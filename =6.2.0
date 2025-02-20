@@ -1,0 +1,9 @@
+Reading package lists...
+Building dependency tree...
+Reading state information...
+redis-server is already the newest version (5:6.0.16-1ubuntu1).
+The following packages were automatically installed and are no longer required:
+  ruby-builder ruby-concurrent ruby-i18n ruby-method-source ruby-mini-portile2
+  ruby-tzinfo
+Use 'sudo apt autoremove' to remove them.
+0 upgraded, 0 newly installed, 0 to remove and 29 not upgraded.

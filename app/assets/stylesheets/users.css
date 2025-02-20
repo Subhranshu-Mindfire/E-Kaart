@@ -106,3 +106,13 @@ td{
 .w-200px{
   width: 300px;
 }
+
+thead > tr > th > span{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.sorting_1{
+  text-align: center !important;
+}

@@ -1,0 +1,202 @@
+<%= stylesheet_link_tag 'cart.css' %>
+<%# = javascript_include_tag "address.js", "data-turbo-track": "reload" %>
+
+<%= form_for Order.new do |f| %>
+  <% unless @cart_items.blank? %>
+    <div class="checkout w-100 bg-light p-0 d-flex justify-content-center">
+      <div class="row w-75 ">
+        <div class="fs-2 mb-3 mt-2">
+          Checkout
+        </div>
+        <div class="col-md-9">        
+          <div class="accordion" id="accordionExample">
+            <div class="Address accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button fs-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                   <h4>Delivery Address</h4>
+                </button>
+              </h2>
+              <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <div class="address">
+                    <% current_user.addresses.each do |address| %>
+                      <div class="d-flex align-items-center gap-3 border-bottom border-1 shadow my-2 pt-3">
+                        <%= f.radio_button :address_id, address.id, checked: address.default, class: "ms-3"  %>
+                        <%= f.label("address_id_" + address.id.to_s) do %>
+                          <% if address.default == true %>
+                            <span class="text-secondary"> Default </span>
+                          <% end %>
+                          <div class="bg-white">
+                            <div>
+                              <b>
+                                <%= address.recipient_name %> <%= address.phone_number %>
+                              </b>
+                            </div>
+                            <span class="fs-6"><%= address.street %> <br> <%= address.city %></span> <br>
+                            <span class="fs-6"><%= address.state %> <%= address.pin_code %></span>
+                            <br>
+                            <button class="collapsed fs-3 border-0 bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                              <%= f.label(("address_id_" + address.id.to_s),"Deliver Here", class: "btn btn-orange my-3") %>
+                            </button>
+                            <!-- <br> -->
+                          </div>
+                      <% end %>
+                      </div>
+                    <% end %>
+                    <div class="m-4">
+                      Add a new address 
+                      <a class="btn btn-lg text-success" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" data-id=<%= 4 %> >
+                            <i class="bi-plus-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add Address"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="Order_Summery accordion-item">
+              <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed fs-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  <h4>Order Summery</h4>
+                </button>
+              </h2>
+              <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <div class="summery">
+                    <% @cart_items.each do |cart_item| %>
+                      <div class="shadow bg-white">
+                        <div class="row p-4">
+                          <div class="col-md-3">
+                            <%= image_tag Product.find(cart_item["product_id"]).images.first, class: "h-300" %>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="fs-4">
+                              <%= Product.find(cart_item["product_id"]).name %>
+                            </div>
+                            <div class="text-secondary">
+                              <%= Product.find(cart_item["product_id"]).description  %>
+                            </div>
+                            <div class="d-flex align-items-center text-secondary mt-3">
+                              <span class="fs-6 fw-medium">Quantity :</span>
+                                <div class="secondary mx-3 fs-6">
+                                  <%= cart_item["quantity"] %>
+                                </div>
+                            </div>
+                            <div class="text-secondary">
+                              &#8377;<%= cart_item.quantity*cart_item.product.price %>
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <i class="bi bi-check-circle-fill text-success"></i>
+                            Deliver By <%= (Date.current + 7.day).strftime("%B %d") %>
+                          </div>
+                        </div>
+                      </div>
+                    <% end %>
+                    <div>
+                      <button class="collapsed fs-5 btn btn-orange border-0 ms-auto d-block mt-3 me-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Continue Order
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="Payment accordion-item">
+              <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed fs-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  <h4>Payment</h4>
+                </button>
+              </h2>
+              <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+
+                  <div class="d-flex justify-content-end">
+                    <%= f.submit 'Pay Now', class: "btn btn-orange mt-4 fs-5 fw-semibold" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3  h-auto">
+          <div class="p-3 bg-white shadow">
+            <div class="price-heading border-bottom border-secondary">
+              Price Details
+            </div>
+            <div class="mt-2" >
+              <% @cart_items.each do |cart_item| %>
+              <div class="d-flex my-3 justify-content-between text-secondary">
+                <div>
+                  <%= Product.find(cart_item["product_id"]).name %> x 
+                <%= cart_item["quantity"] %>
+                </div>
+                
+                <div class="ms-3">
+                  &#8377;<%= Product.find(cart_item["product_id"]).price * cart_item["quantity"].to_i %>
+                </div>
+              </div>
+              <% end %>
+              <div class="delivery mt-4 border-bottom border-dark pb-3">
+                <div class="d-flex justify-content-between text-secondary">
+                  Delivery Charges
+                  <div>
+                    &#8377; 50.0
+                  </div>
+                </div>
+              </div>
+              <div class="delivery mt-4 border-bottom border-dark pb-3">
+                <div class="d-flex justify-content-between fw-medium">
+                  Total
+                  <div>
+                    &#8377; <%= @total + 50 %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <h1 class="text-center mt-4">No Items In The Cart</h1>
+  <% end %>
+<% end %>
+
+
+
+
+
+<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content align-items-center">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5 text-center" id="exampleModalToggleLabel">Add Address</h1>
+        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+      </div>
+      <%= form_for Address.new, url: address_index_path ,html: {class: "h-65 w-75"} do |f|%>
+        <div>
+          <%= f.text_field :recipient_name, class: "form-control mb-2", placeholder: "Recipient Name" %>
+          <%= f.text_field :phone_number, class: "form-control mb-2", placeholder: "Phone Number" %>
+          <%= f.text_field :street, class: "form-control mb-2", placeholder: "Street Name" %>
+          <%= f.text_field :city, class: "form-control mb-2", placeholder: "City" %>
+          <%= f.text_field :state, class: "form-control mb-2", placeholder: "State" %>
+          <%= f.text_field :pin_code, class: "form-control mb-2", placeholder: "PIN Code" %>
+          <div class="d-flex justify-content-center gap-2 mt-3">
+            <%= f.check_box :default, {},true, false %>
+            <%= f.label :default, 'Make this your default address', class:"fs-6 text-secondary fw-normal" %>
+          </div>
+          
+        </div>
+        <div class="d-flex flex-column align-items-center my-4 gap-3">
+          <%= f.submit "Submit", class: "btn btn-primary "%>
+        </div>
+        </div>
+      <%end%>
+      
+    </div>
+  </div>
+</div>

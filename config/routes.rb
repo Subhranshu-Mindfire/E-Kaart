@@ -56,6 +56,9 @@ Rails.application.routes.draw do
 
   resources :product_stocks, only: [:index, :update, :create, :destroy, :edit]
 
+  resources :address, only: [:index, :update, :create, :destroy, :edit]
+
+
   resources :cart_items, path: :cart, only: [:index, :create, :destroy] do
     member do
       patch '/increment', to: 'cart_items#increment'
@@ -65,4 +68,5 @@ Rails.application.routes.draw do
 
   get '/orders', to: 'orders#my_order'
   post '/orders', to: 'orders#create', as: "create_order"
+  get '/checkout', to: 'orders#new'
 end
