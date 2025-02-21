@@ -1,5 +1,5 @@
 <%= stylesheet_link_tag 'cart.css' %>
-<%# = javascript_include_tag "address.js", "data-turbo-track": "reload" %>
+<%= javascript_include_tag "address.js", "data-turbo-track": "reload"%>
 
 <%= form_for Order.new do |f| %>
   <% unless @cart_items.blank? %>
@@ -35,9 +35,17 @@
                             <span class="fs-6"><%= address.street %> <br> <%= address.city %></span> <br>
                             <span class="fs-6"><%= address.state %> <%= address.pin_code %></span>
                             <br>
-                            <button class="collapsed fs-3 border-0 bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                              <%= f.label(("address_id_" + address.id.to_s),"Deliver Here", class: "btn btn-orange my-3") %>
-                            </button>
+                            <div class="d-flex mb-1">
+                              <button class="border-0 bg-white collapsed m-0 p-0">
+                                <a id="address_update" class="btn btn-secondary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" data-id=<%= address.id %>
+                                  data-recipient=<%= address.recipient_name %> data-phone=<%= address.phone_number %> data-street=<%= address.street %> data-city=<%= address.city %> data-state=<%= address.state %> data-pincode=<%= address.pin_code%> data-default=<%= address.default %>  >
+                                Edit Address
+                              </a>
+                              </button>
+                              <button class="collapsed fs-3 border-0 bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <%= f.label(("address_id_" + address.id.to_s),"Deliver Here", class: "btn btn-orange my-2") %>
+                              </button>
+                            </div>
                             <!-- <br> -->
                           </div>
                       <% end %>
@@ -45,7 +53,7 @@
                     <% end %>
                     <div class="m-4">
                       Add a new address 
-                      <a class="btn btn-lg text-success" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" data-id=<%= 4 %> >
+                      <a class="btn btn-lg text-success" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" >
                             <i class="bi-plus-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add Address"></i>
                       </a>
                     </div>
@@ -169,7 +177,37 @@
 
 
 
-
+<!--  -->
+<!-- <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1"> -->
+  <!-- <div class="modal-dialog modal-dialog-centered"> -->
+    <!-- <div class="modal-content align-items-center"> -->
+      <!-- <div class="modal-header"> -->
+        <!-- <h1 class="modal-title fs-5 text-center" id="exampleModalToggleLabel">Add Address</h1> -->
+      <!-- </div> -->
+      <%# = form_for Address.new, url: address_index_path ,html: {class: "h-65 w-75"} do |f| %>
+        <!-- <div> -->
+          <%# = f.text_field :recipient_name, class: "form-control mb-2", placeholder: "Recipient Name" %>
+          <%# = f.text_field :phone_number, class: "form-control mb-2", placeholder: "Phone Number" %>
+          <%# = f.text_field :street, class: "form-control mb-2", placeholder: "Street Name" %>
+          <%# = f.text_field :city, class: "form-control mb-2", placeholder: "City" %>
+          <%# = f.text_field :state, class: "form-control mb-2", placeholder: "State" %>
+          <%# = f.text_field :pin_code, class: "form-control mb-2", placeholder: "PIN Code" %>
+          <!-- <div class="d-flex justify-content-center gap-2 mt-3"> -->
+            <%# = f.check_box :default, {},true, false %>
+            <%# = f.label :default, 'Make this your default address', class:"fs-6 text-secondary fw-normal" %>
+          <!-- </div> -->
+          <!--  -->
+        <!-- </div> -->
+        <!-- <div class="d-flex flex-column align-items-center my-4 gap-3"> -->
+          <%# = f.submit "Submit", class: "btn btn-primary " %>
+        <!-- </div> -->
+        <!-- </div> -->
+      <%# end %>
+      <!--  -->
+    <!-- </div> -->
+  <!-- </div> -->
+<!-- </div> -->
+<!--  -->
 <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content align-items-center">
@@ -177,20 +215,22 @@
         <h1 class="modal-title fs-5 text-center" id="exampleModalToggleLabel">Add Address</h1>
         <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
       </div>
-      <%= form_for Address.new, url: address_index_path ,html: {class: "h-65 w-75"} do |f|%>
+      <%= form_for @address, url: address_index_path, html: {class: "h-65 w-75"} do |f|%>
         <div>
-          <%= f.text_field :recipient_name, class: "form-control mb-2", placeholder: "Recipient Name" %>
+          <%= f.hidden_field :id %>
+          <%= f.text_field :recipient_name, class: "form-control mb-2", placeholder: "Recipient Name"  %>
           <%= f.text_field :phone_number, class: "form-control mb-2", placeholder: "Phone Number" %>
           <%= f.text_field :street, class: "form-control mb-2", placeholder: "Street Name" %>
           <%= f.text_field :city, class: "form-control mb-2", placeholder: "City" %>
           <%= f.text_field :state, class: "form-control mb-2", placeholder: "State" %>
           <%= f.text_field :pin_code, class: "form-control mb-2", placeholder: "PIN Code" %>
+          
           <div class="d-flex justify-content-center gap-2 mt-3">
-            <%= f.check_box :default, {},true, false %>
+            <%= f.check_box :default, {}, true, false %>
             <%= f.label :default, 'Make this your default address', class:"fs-6 text-secondary fw-normal" %>
           </div>
-          
         </div>
+        <%# = f.hidden_field :default, value: false %>
         <div class="d-flex flex-column align-items-center my-4 gap-3">
           <%= f.submit "Submit", class: "btn btn-primary "%>
         </div>

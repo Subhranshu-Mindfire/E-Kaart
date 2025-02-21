@@ -28,6 +28,7 @@ class OrdersController < BeforeOrderController
   end
 
   def new
+    @address= Address.new
     @cart_items = CartItem.where(user_id: current_user.id).order(:created_at)
     @total = @cart_items.inject(0){ |sum,item| sum + (Product.find(item["product_id"]).price * item["quantity"].to_i) }
   end
