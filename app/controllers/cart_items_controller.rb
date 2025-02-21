@@ -39,7 +39,6 @@ class CartItemsController < ApplicationController
         session[:cart_items] << cart_params
         notice_message = "Added To Cart Successfully"
       end
-
       redirect_to cart_items_path, notice: notice_message
     end
   end
