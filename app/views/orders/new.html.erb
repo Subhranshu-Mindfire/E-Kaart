@@ -1,5 +1,4 @@
 <%= stylesheet_link_tag 'cart.css' %>
-<%= javascript_include_tag "address.js", "data-turbo-track": "reload"%>
 
 <%= form_for Order.new do |f| %>
   <% unless @cart_items.blank? %>
@@ -19,7 +18,7 @@
               <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
                   <div class="address">
-                    <% current_user.addresses.each do |address| %>
+                    <% current_user.addresses.order(created_at: :desc).each do |address| %>
                       <div class="d-flex align-items-center gap-3 border-bottom border-1 shadow my-2 pt-3">
                         <%= f.radio_button :address_id, address.id, checked: address.default, class: "ms-3"  %>
                         <%= f.label("address_id_" + address.id.to_s) do %>
@@ -38,7 +37,7 @@
                             <div class="d-flex mb-1">
                               <button class="border-0 bg-white collapsed m-0 p-0">
                                 <a id="address_update" class="btn btn-secondary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" data-id=<%= address.id %>
-                                  data-recipient=<%= address.recipient_name %> data-phone=<%= address.phone_number %> data-street=<%= address.street %> data-city=<%= address.city %> data-state=<%= address.state %> data-pincode=<%= address.pin_code%> data-default=<%= address.default %>  >
+                                  data-recipient="<%= address.recipient_name %>" data-phone="<%= address.phone_number %>" data-street="<%= address.street %>" data-city="<%= address.city %>" data-state="<%= address.state %>" data-pincode=<%= address.pin_code%> data-default=<%= address.default %>  >
                                 Edit Address
                               </a>
                               </button>
@@ -120,7 +119,8 @@
                   <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
 
                   <div class="d-flex justify-content-end">
-                    <%= f.submit 'Pay Now', class: "btn btn-orange mt-4 fs-5 fw-semibold" %>
+                    <%= f.submit "Pay Now", class: "btn btn-orange mt-4 fs-5 fw-semibold", id:"rzp-button1"%>
+                    <!-- <button class="btn btn-orange mt-4 fs-5 fw-semibold" id="rzp-button1">Pay</button> -->
                   </div>
                 </div>
               </div>
@@ -174,40 +174,6 @@
   <% end %>
 <% end %>
 
-
-
-
-<!--  -->
-<!-- <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1"> -->
-  <!-- <div class="modal-dialog modal-dialog-centered"> -->
-    <!-- <div class="modal-content align-items-center"> -->
-      <!-- <div class="modal-header"> -->
-        <!-- <h1 class="modal-title fs-5 text-center" id="exampleModalToggleLabel">Add Address</h1> -->
-      <!-- </div> -->
-      <%# = form_for Address.new, url: address_index_path ,html: {class: "h-65 w-75"} do |f| %>
-        <!-- <div> -->
-          <%# = f.text_field :recipient_name, class: "form-control mb-2", placeholder: "Recipient Name" %>
-          <%# = f.text_field :phone_number, class: "form-control mb-2", placeholder: "Phone Number" %>
-          <%# = f.text_field :street, class: "form-control mb-2", placeholder: "Street Name" %>
-          <%# = f.text_field :city, class: "form-control mb-2", placeholder: "City" %>
-          <%# = f.text_field :state, class: "form-control mb-2", placeholder: "State" %>
-          <%# = f.text_field :pin_code, class: "form-control mb-2", placeholder: "PIN Code" %>
-          <!-- <div class="d-flex justify-content-center gap-2 mt-3"> -->
-            <%# = f.check_box :default, {},true, false %>
-            <%# = f.label :default, 'Make this your default address', class:"fs-6 text-secondary fw-normal" %>
-          <!-- </div> -->
-          <!--  -->
-        <!-- </div> -->
-        <!-- <div class="d-flex flex-column align-items-center my-4 gap-3"> -->
-          <%# = f.submit "Submit", class: "btn btn-primary " %>
-        <!-- </div> -->
-        <!-- </div> -->
-      <%# end %>
-      <!--  -->
-    <!-- </div> -->
-  <!-- </div> -->
-<!-- </div> -->
-<!--  -->
 <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content align-items-center">
@@ -240,3 +206,34 @@
     </div>
   </div>
 </div>
+
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+
+
+document.getElementById('rzp-button1').onclick = function(e){
+  var options = {
+    "key": "rzp_test_sMAArAlcP3cfDm",
+    "amount": "<%= @total + 50 %>", 
+    "currency": "INR",
+    "name": "Ekaart",
+    "description": "Order Payment",
+    "image": "https://example.com/your_logo",
+    "order_id": "<%= @razorpay_order.id %>",
+    "callback_url": `/order_verify/${document.querySelector('input[name="order[address_id]"]:checked').value
+    }`,
+    "prefill": {
+        "name": "<%= current_user.first_name + " " + current_user.last_name %>",
+        "email": "<%= current_user.email %>",
+    }, 
+    "theme": {
+        "color": "#3399cc"
+    }
+    };
+    var rzp1 = new Razorpay(options);
+    rzp1.open();
+    e.preventDefault();
+}
+</script>
+<%= javascript_include_tag "address.js", "data-turbo-track": "reload"%>

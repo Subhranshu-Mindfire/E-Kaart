@@ -1,0 +1,22 @@
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+  var options = {
+      "key": "rzp_test_sMAArAlcP3cfDm",
+      "amount": "<%= @total %>", 
+      "currency": "INR",
+      "name": "Ekaart",
+      "description": "Order Payment",
+      "image": "https://example.com/your_logo",
+      "order_id": "<%= @razorpay_order.id %>",
+      "callback_url": "/order_verify",
+      "prefill": {
+          "name": "<%= current_user.first_name + " " + current_user.last_name %>",
+          "email": "<%= current_user.email %>",
+      }, 
+      "theme": {
+          "color": "#3399cc"
+      }
+  };
+  var rzp1 = new Razorpay(options);
+  rzp1.open();
+</script>

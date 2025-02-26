@@ -67,6 +67,7 @@ Rails.application.routes.draw do
   end
 
   get '/orders', to: 'orders#my_order'
-  post '/orders', to: 'orders#create', as: "create_order"
+  post '/order_verify/:id', to: 'orders#create'
+  get ':id/payment', to: 'orders#payment', as: "payment"
   get '/checkout', to: 'orders#new'
 end

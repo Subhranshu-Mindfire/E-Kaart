@@ -21,11 +21,20 @@
 .home-card{
   transition-property: scale;
   transition-duration: 0.5s;
-  height: 300px;
+  height: 350px;
 }
 
 .home-card:hover{
   scale: 1.05;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   cursor: pointer;
+}
+
+.m--1{
+  margin-top: -10px;
+  transition-property: scale;
+  transition-duration: 0.5s;
+}
+.m--1:hover{
+  scale: 1.05;
 }
