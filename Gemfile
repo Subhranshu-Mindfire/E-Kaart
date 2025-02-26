@@ -14,10 +14,14 @@ gem "importmap-rails"
 gem "turbo-rails"
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails"
+gem 'razorpay'
+
+
 
 gem 'jquery-rails'
 gem 'jquery-datatables'
 gem 'ajax-datatables-rails'
+gem 'kaminari'
 
 gem 'sidekiq', '>= 7.3.2'
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]

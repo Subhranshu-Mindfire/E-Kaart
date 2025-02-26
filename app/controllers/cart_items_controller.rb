@@ -4,6 +4,9 @@ class CartItemsController < ApplicationController
       @cart_items = CartItem.where(user_id: current_user.id).order(:created_at)
     else
       @cart_items = session[:cart_items]
+      if @cart_items.blank?
+        @cart_items = []
+      end
     end
     @total = @cart_items.inject(0){ |sum,item| sum + (Product.find(item["product_id"]).price * item["quantity"].to_i) }
   end
@@ -46,8 +49,12 @@ class CartItemsController < ApplicationController
   def increment
     if user_signed_in?
       @cart_item = CartItem.find(params[:id])
-      @cart_item.update(quantity: (@cart_item.quantity + 1))
-      redirect_to cart_items_path, notice: "Quantity Added Successfully"
+      if @cart_item.quantity == 10
+        redirect_to cart_items_path, alert: "Maximum 10 Quantity Can Be Ordered"
+      else
+        @cart_item.update(quantity: (@cart_item.quantity + 1))
+        redirect_to cart_items_path, notice: "Quantity Added Successfully"
+      end
     else
       cart_item = session[:cart_items][params[:id].to_i]
       cart_item["quantity"] = (cart_item["quantity"].to_i + 1).to_s
