@@ -9,4 +9,8 @@ class Product < ApplicationRecord
   validates :name, presence: true
   validates :price, presence: true
 
+  def count_stocks
+    product_stocks.where(transaction_type: true).pluck(:quantity).sum - product_stocks.where(transaction_type: false).pluck(:quantity).sum
+  end
+
 end

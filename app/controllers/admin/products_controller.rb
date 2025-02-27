@@ -6,7 +6,7 @@ module Admin
       @products = Product.all.order(created_at: :asc)
       @stock={}
       @products.each do |product|
-        @stock[product] = product.product_stocks.where(transaction_type: true).pluck(:quantity).sum - product.product_stocks.where(transaction_type: false).pluck(:quantity).sum
+        @stock[product] = product.count_stocks
       end
       authorize Product
     end

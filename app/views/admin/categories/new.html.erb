@@ -7,7 +7,7 @@
 <div>
     <div class="container">
         <div class="form-box shadow-lg">
-            <%= form_for @category, html: { class: 'form-control d-flex justify-center' } do |f| %>
+            <%= form_for @category, url: admin_categories_path, html: { class: 'form-control d-flex justify-center' } do |f| %>
 
                 <h1 class="text-dark">Add Category</h1>
                 

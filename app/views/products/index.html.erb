@@ -96,18 +96,26 @@
             <div class="col-md-3">
               <div class="home-card  gap d-flex  align-items-center justify-content-center ">
                 <div class="d-flex flex-column justify-content-center">
-                  <%= link_to product_path(item.id) do %>
-                    <%= image_tag item.images.first, class:"img-fluid h-300"%>
-                  <% end %>
                   
-                  <div>
-                    <%= form_for CartItem.new do |f| %>
-                        <%= f.hidden_field :user_id, value: current_user.id if user_signed_in? %>
-                        <%= f.hidden_field :quantity, value: 1 %>
-                        <%= f.hidden_field :product_id, value: item.id %>
-                        <%= f.submit "Add +", class: "m--1 w-50 py-1 bg-secondary border-0 text-white rounded-3 fw-medium "%>
+                  <% if item.count_stocks > 0 %>
+                    <%= link_to product_path(item.id) do %>
+                      <%= image_tag item.images.first, class:"img-fluid h-300 "%>
                     <% end %>
-                  </div>
+                    <div>
+                      <%= form_for CartItem.new do |f| %>
+                          <%= f.hidden_field :user_id, value: current_user.id if user_signed_in? %>
+                          <%= f.hidden_field :quantity, value: 1 %>
+                          <%= f.hidden_field :product_id, value: item.id %>
+                          <%= f.submit "Add +", class: "m--1 w-50 py-1 bg-secondary border-0 text-white rounded-3 fw-medium "%>
+                      <% end %>
+                    </div>
+                  <% else %>
+                    <%= link_to product_path(item.id) do %>
+                      <%= image_tag item.images.first, class:"img-fluid h-300 bw-filter position-relative"%>
+                    <% end %>
+                    <!-- <button type="button" class="m--1 w-75 py-1 btn-secondary border-0 text-white rounded-3 fw-medium mx-auto z-3 " disabled> Out Of Stock</button> -->
+                    <button type="button" class="m--1 btn btn-secondary w-75 mx-auto fs-6 p-1 z-3" disabled>Out Of Stock</button>
+                  <% end %>
                   <div class="text-secondary text-center mt-2"><%= item.name %></div>
                   <p class="fs-5 text-semibold text-center">
                     &#8377;<%= item.price %>
@@ -128,18 +136,26 @@
             <div class="col-md-3">
               <div class="home-card  gap d-flex  align-items-center justify-content-center ">
                 <div class="d-flex flex-column justify-content-center">
-                  <%= link_to see_product_category_path(Category.find_by(name: @name).id, item.id) do %>
-                    <%= image_tag item.images.first, class:"img-fluid h-300"%>
-                  <% end %>
                   
-                  <div>
-                    <%= form_for CartItem.new do |f| %>
-                        <%= f.hidden_field :user_id, value: current_user.id if user_signed_in? %>
-                        <%= f.hidden_field :quantity, value: 1 %>
-                        <%= f.hidden_field :product_id, value: item.id %>
-                        <%= f.submit "Add +", class: "m--1 w-50 py-1 bg-secondary border-0 text-white rounded-3 fw-medium "%>
+                  <% if item.count_stocks > 0 %>
+                    <%= link_to product_path(item.id) do %>
+                      <%= image_tag item.images.first, class:"img-fluid h-300 "%>
                     <% end %>
-                  </div>
+                    <div>
+                      <%= form_for CartItem.new do |f| %>
+                          <%= f.hidden_field :user_id, value: current_user.id if user_signed_in? %>
+                          <%= f.hidden_field :quantity, value: 1 %>
+                          <%= f.hidden_field :product_id, value: item.id %>
+                          <%= f.submit "Add +", class: "m--1 w-50 py-1 bg-secondary border-0 text-white rounded-3 fw-medium "%>
+                      <% end %>
+                    </div>
+                  <% else %>
+                    <%= link_to product_path(item.id) do %>
+                      <%= image_tag item.images.first, class:"img-fluid h-300 bw-filter position-relative"%>
+                    <% end %>
+                    <!-- <button type="button" class="m--1 w-75 py-1 btn-secondary border-0 text-white rounded-3 fw-medium mx-auto z-3 " disabled> Out Of Stock</button> -->
+                    <button type="button" class="m--1 btn btn-secondary w-75 mx-auto fs-6 p-1 z-3" disabled>Out Of Stock</button>
+                  <% end %>
                   <div class="text-secondary text-center mt-2"><%= item.name %></div>
                   <p class="fs-5 text-semibold text-center">
                     &#8377;<%= item.price %>
@@ -178,99 +194,49 @@
       </div>
     </div>
     <div class="categories">
-      <div class="electronics bg-white py-4 my-3">
-        <div class="heading fs-3 ps-5 pb-2">
-          Best Of Electronics
-        </div>
-        <div class="main row mx-5">
-          <% @electronics.each do |item| %>
-            <div class="col-md-3">
-              <div class="home-card  gap d-flex  align-items-center justify-content-center ">
-                <div class="d-flex flex-column justify-content-center">
-                  <%= link_to product_path(item.id) do %>
-                    <%= image_tag item.images.first, class:"img-fluid h-300"%>
-                  <% end %>
-                  
-                  <div>
-                    <%= form_for CartItem.new do |f| %>
-                        <%= f.hidden_field :user_id, value: current_user.id if user_signed_in? %>
-                        <%= f.hidden_field :quantity, value: 1 %>
-                        <%= f.hidden_field :product_id, value: item.id %>
-                        <%= f.submit "Add +", class: "m--1 w-50 py-1 bg-secondary border-0 text-white rounded-3 fw-medium "%>
-                    <% end %>
-                  </div>
-                  <div class="text-secondary text-center mt-2"><%= item.name %></div>
-                  <p class="fs-5 text-semibold text-center">
-                    &#8377;<%= item.price %>
-                  </p>
-                </div>
-              </div>
+      <% @categories.shuffle.each do |category| %>
+        <% unless category.products.blank? %>
+          <div class="bg-white py-4 my-3">
+            <div class="heading fs-3 ps-5 pb-2">
+              Best Of <%= category.name %>
             </div>
-          <% end %>
-        </div>
-      </div>
-      <div class="electronics bg-white py-4 my-3">
-        <div class="heading fs-3 ps-5 pb-2">
-          Best Of Home Decors
-        </div>
-        <div class="main row mx-5">
-          <% @home_decors.each do |item| %>
-            <div class="col-md-3">
-              <div class="home-card  gap d-flex  align-items-center justify-content-center ">
-                <div class="d-flex flex-column justify-content-center">
-                  <%= link_to product_path(item.id) do %>
-                    <%= image_tag item.images.first, class:"img-fluid h-300"%>
-                  <% end %>
-                  
-                  <div>
-                    <%= form_for CartItem.new do |f| %>
-                        <%= f.hidden_field :user_id, value: current_user.id if user_signed_in? %>
-                        <%= f.hidden_field :quantity, value: 1 %>
-                        <%= f.hidden_field :product_id, value: item.id %>
-                        <%= f.submit "Add +", class: "m--1 w-50 py-1 bg-secondary border-0 text-white rounded-3 fw-medium "%>
-                    <% end %>
+            <div class="main row mx-5">
+              <% category.products.each do |item| %>
+                <div class="col-md-3">
+                  <div class="home-card  gap d-flex  align-items-center justify-content-center ">
+                    <div class="d-flex flex-column justify-content-center">
+                      
+                      <% if item.count_stocks > 0 %>
+                        <%= link_to product_path(item.id) do %>
+                          <%= image_tag item.images.first, class:"img-fluid h-300 "%>
+                        <% end %>
+                        <div>
+                          <%= form_for CartItem.new do |f| %>
+                              <%= f.hidden_field :user_id, value: current_user.id if user_signed_in? %>
+                              <%= f.hidden_field :quantity, value: 1 %>
+                              <%= f.hidden_field :product_id, value: item.id %>
+                              <%= f.submit "Add +", class: "m--1 w-50 py-1 bg-secondary border-0 text-white rounded-3 fw-medium "%>
+                          <% end %>
+                        </div>
+                      <% else %>
+                        <%= link_to product_path(item.id) do %>
+                          <%= image_tag item.images.first, class:"img-fluid h-300 bw-filter position-relative"%>
+                        <% end %>
+                        <!-- <button type="button" class="m--1 w-75 py-1 btn-secondary border-0 text-white rounded-3 fw-medium mx-auto z-3 " disabled> Out Of Stock</button> -->
+                        <button type="button" class="m--1 btn btn-secondary w-75 mx-auto fs-6 p-1 z-3" disabled>Out Of Stock</button>
+                      <% end %>
+                      <div class="text-secondary text-center mt-2"><%= item.name %></div>
+                      <p class="fs-5 text-semibold text-center">
+                        &#8377;<%= item.price %>
+                      </p>
+                    </div>
                   </div>
-                  <div class="text-secondary text-center mt-2"><%= item.name %></div>
-                  <p class="fs-5 text-semibold text-center">
-                    &#8377;<%= item.price %>
-                  </p>
                 </div>
-              </div>
+              <% end %>
             </div>
-          <% end %>
-        </div>
-      </div>
-      <div class="electronics bg-white py-4 my-3">
-        <div class="heading fs-3 ps-5 pb-2">
-          Best Of Skin Care
-        </div>
-        <div class="main row mx-5">
-          <% @skin_cares.each do |item| %>
-            <div class="col-md-3">
-              <div class="home-card  gap d-flex  align-items-center justify-content-center ">
-                <div class="d-flex flex-column justify-content-center">
-                  <%= link_to product_path(item.id) do %>
-                    <%= image_tag item.images.first, class:"img-fluid h-300"%>
-                  <% end %>
-                  
-                  <div>
-                    <%= form_for CartItem.new do |f| %>
-                        <%= f.hidden_field :user_id, value: current_user.id if user_signed_in? %>
-                        <%= f.hidden_field :quantity, value: 1 %>
-                        <%= f.hidden_field :product_id, value: item.id %>
-                        <%= f.submit "Add +", class: "m--1 w-50 py-1 bg-secondary border-0 text-white rounded-3 fw-medium "%>
-                    <% end %>
-                  </div>
-                  <div class="text-secondary text-center mt-2"><%= item.name %></div>
-                  <p class="fs-5 text-semibold text-center">
-                    &#8377;<%= item.price %>
-                  </p>
-                </div>
-              </div>
-            </div>
-          <% end %>
-        </div>
-      </div>
+          </div>
+        <% end %>
+      <% end %>
     </div>
     <% end %>
   </div>
