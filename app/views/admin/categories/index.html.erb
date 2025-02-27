@@ -1,150 +1,202 @@
 <%= stylesheet_link_tag "users.css", "data-turbo-track": "reload" %>
 
-<h1 align="center" class="my-5 py-5">Categories List</h1>
+<h1 align="center" class="mt-5 py-5">Categories List</h1>
 
-<table align="center" class="shadow">
-    <tr class="border-bottom">
-        <th>
-            Seriel No
-        </th>
-        <th>
-            Category
-        </th>
-        <th>
-            Description
-        </th>
-        <th>
-            Actions
-        </th>
-        
-    </tr>
-    
-    <% @categories.each_with_index do |category,i| %>
-      <tr>  
-        <div class="row">
-          <td>
-              <%= i+1 %>
-          </td>
-          <td>
-            <%= category.name %>
-          </td>
-          <td>
-              <%= category.description %>
-          </td>                                                          
-          <td>
-            <%= link_to admin_category_path(category),class:"btn btn-outline-primary" do %>
-                <i class="bi bi-eye-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Show Category"></i>
-            <% end %>
-            <%= link_to edit_admin_category_path(category),class:"btn btn-outline-dark"  do %>
-                <i class="bi bi-pen-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Category"></i>
-            <% end %>
-            <%= link_to admin_category_path(category), data: { turbo_method: :delete, turbo_confirm: 'Are you sure to delete the Category?' },class:"btn btn-outline-danger" do %>
-                <i class="bi bi-trash-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Category"></i>
-            <% end %>
-          </td> 
+<div align="center" class="my-4">
+  <%= link_to 'Add Another', new_admin_category_path, class: "btn btn-outline-success" %>
+</div>
+
+<div>
+  <div class="w-50 m-auto">
+    <div>
+      <div class="accordion" id="first">
+        <div class="accordion-item">
+          <div class="accordion-header rounded-1 mx-5 py-2">
+            <div class="row">
+              <div class="col-md-2 fw-bold">
+                Name
+              </div>
+              <div class="col-md-5 fw-bold">
+                  Description
+              </div>
+              <div class="col-md-4 fw-bold">
+                Actions
+              </div>
+              <div class="col-md-1 justify-content-center fw-bold">
+                Sub-Category
+              </div>
+            </div>
+          </div>
         </div>
-      </tr>
-    <% end %>
-
-    <% @categories.each_with_index do |category,i| %>
-        <% if !category.subcategories.blank? and category.parent.blank?  %>
-            <div>
-              <div class="accordion" id="accordionExample<%= i %>">
-                  <div class="accordion-item">
-                      <div class="accordion-header d-flex rounded-1">
-                        
-                          <div class="row">
-                            <div class="col-md-1">
-                                <%= i+1 %>
-                            </div>
-                            <div class="col-md-2">
-                              <%= category.name %>
-                            </div>
-                            <div class="col-md-4">
-                                <%= category.description %>
-                            </div>                                                          
-                            <div class="col-md-4">
-                              <%= link_to admin_category_path(category),class:"btn btn-outline-primary" do %>
+      </div>
+    </div>
+    <% @categories.each_with_index do |category, i| %>
+      <% if !category.subcategories.blank? && category.parent.blank? %>
+        <div>
+          <div class="accordion" id="accordionExample<%= category.id %>">
+            <div class="accordion-item">
+              <div class="accordion-header rounded-1 mx-5 py-3 py-3">
+                <div class="row">
+                  <div class="col-md-2">
+                    <%= category.name %>
+                  </div>
+                  <div class="col-md-5">
+                      <%= category.description %>
+                  </div>
+                  <div class="col-md-4">
+                    <%= link_to admin_category_path(category), class: "btn btn-outline-primary" do %>
+                      <i class="bi bi-eye-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Show Category"></i>
+                    <% end %>
+                    <%= link_to edit_admin_category_path(category), class: "btn btn-outline-dark" do %>
+                      <i class="bi bi-pen-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Category"></i>
+                    <% end %>
+                    <%= link_to admin_category_path(category), data: { turbo_method: :delete, turbo_confirm: 'Are you sure to delete the Category?' }, class: "btn btn-outline-danger" do %>
+                      <i class="bi bi-trash-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Category"></i>
+                    <% end %>
+                  </div>
+                  <div class="col-md-1 justify-content-center">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= category.id %>" aria-expanded="false" aria-controls="collapse<%= category.id %>">
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div id="collapse<%= category.id %>" class="accordion-collapse collapse" data-bs-parent="#accordionExample<%= category.id %>">
+                <% category.subcategories.each_with_index do |item, j| %>
+                  <% if !item.subcategories.blank? %>
+                    <div>
+                      <div class="accordion" id="accordionSubcategory<%= item.id %>">
+                        <div class="accordion-item">
+                          <div class="accordion-header rounded-1 mx-5 py-3">
+                            <div class="row">
+                              
+                              <div class="col-md-2">
+                                <%= item.name %>
+                              </div>
+                              <div class="col-md-5">
+                                <%= item.description %>
+                              </div>
+                              <div class="col-md-4">
+                                <%= link_to admin_category_path(item), class: "btn btn-outline-primary" do %>
                                   <i class="bi bi-eye-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Show Category"></i>
-                              <% end %>
-                              <%= link_to edit_admin_category_path(category),class:"btn btn-outline-dark"  do %>
+                                <% end %>
+                                <%= link_to edit_admin_category_path(item), class: "btn btn-outline-dark" do %>
                                   <i class="bi bi-pen-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Category"></i>
-                              <% end %>
-                              <%= link_to admin_category_path(category), data: { turbo_method: :delete, turbo_confirm: 'Are you sure to delete the Category?' },class:"btn btn-outline-danger" do %>
+                                <% end %>
+                                <%= link_to admin_category_path(item), data: { turbo_method: :delete, turbo_confirm: 'Are you sure to delete the Category?' }, class: "btn btn-outline-danger" do %>
                                   <i class="bi bi-trash-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Category"></i>
-                              <% end %>
-                            </div> 
+                                <% end %>
+                              </div>
+                              <div class="col-md-1 justify-content-center">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSubcategory<%= item.id %>" aria-expanded="false" aria-controls="collapseSubcategory<%= item.id %>">
+                                </button>
+                              </div>
+                            </div>
                           </div>
-                        
-                        <div>
-                          <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= i %>" aria-expanded="true" aria-controls="collapseOne">
-                            
-                        </button>
+                          <div id="collapseSubcategory<%= item.id %>" class="accordion-collapse collapse" data-bs-parent="#accordionSubcategory<%= item.id %>">
+                            <% item.subcategories.each do |sub_item| %>
+                              <div>
+                                <div class="accordion" id="accordionSubcategory<%= item.id %>">
+                                  <div class="accordion-item">
+                                    <div class="accordion-header rounded-1 mx-5 py-3 py-2">
+                                      <div class="row">
+                                        
+                                        <div class="col-md-2">
+                                          <%= sub_item.name %>
+                                        </div>
+                                        <div class="col-md-5">
+                                          <%= sub_item.description %>
+                                        </div>
+                                        <div class="col-md-4">
+                                          <%= link_to admin_category_path(sub_item), class: "btn btn-outline-primary" do %>
+                                            <i class="bi bi-eye-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Show Category"></i>
+                                          <% end %>
+                                          <%= link_to edit_admin_category_path(sub_item), class: "btn btn-outline-dark" do %>
+                                            <i class="bi bi-pen-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Category"></i>
+                                          <% end %>
+                                          <%= link_to admin_category_path(sub_item), data: { turbo_method: :delete, turbo_confirm: 'Are you sure to delete the Category?' }, class: "btn btn-outline-danger" do %>
+                                            <i class="bi bi-trash-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Category"></i>
+                                          <% end %>
+                                        </div>
+                                        <div class="col-md-1"></div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            <% end %>
+                          </div>
                         </div>
                       </div>
-                      <div id="collapse<%= i %>" class="accordion-collapse collapse" data-bs-parent="#accordionExample<%=i%>">
-                          <% category.subcategories.each_with_index do |item,j| %>
-                              <% if !item.subcategories.blank? %>
-                                <div>
-                                  <div class="accordion" id="accordionExample">
-                                      <div class="accordion-item">
-                                          <div class="accordion-header d-flex rounded-1">
-                                            <div class="my-auto ms-3 w-75">
-                                              <%= link_to root_path(category:item.id) do %>
-                                                <%= item.name %>
-                                              <% end %>
-                                            </div>
-                                            <div>
-                                              <button class="accordion-button collapsed hey" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= i %><%= j %>" aria-expanded="true" aria-controls="collapseOne">
-                                                
-                                            </button>
-                                            </div>
-                                          </div>
-                                          <div id="collapse<%= i %><%= j %>" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                                              <% item.subcategories.each do |item| %>
-                                                  <% if item.subcategories.blank? %>
-                                                    <div class="accordion-body">
-                                                      <%= link_to root_path(category: item.id) do %>
-                                                          <%= item.name %>
-                                                      <% end %>
-                                                    </div>
-                                                  <% else %>
-                                                      <div class="accordion-body">
-                                                      <%= link_to root_path(category: item.id) do %>
-                                                          <%= item.name %>
-                                                      <% end %>
-                                                    </div>
-                                                  <% end %>
-                                              <% end %> 
-                                              
-                                          </div>
-                                      </div>
-                                  </div>
+                    </div>
+                  <% else %>
+                    <div>
+                      <div class="accordion" id="accordionExample<%= category.id %>">
+                        <div class="accordion-item">
+                          <div class="accordion-header rounded-1 mx-5 py-3 py-2">
+                            <div class="row">
+                              <div class="col-md-2">
+                                <%= item.name %>
                               </div>
-                              <% else %>
-                                  <div class="accordion-body">
-                                  <%= link_to root_path(category: item.id) do %>
-                                      <%= item.name %>
-                                  <% end %>
-                                </div>
-                              <% end %>
-                          <% end %> 
-                          
+                              <div class="col-md-5">
+                                  <%= item.description %>
+                              </div>
+                              <div class="col-md-4">
+                                <%= link_to admin_category_path(item), class: "btn btn-outline-primary" do %>
+                                  <i class="bi bi-eye-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Show Category"></i>
+                                <% end %>
+                                <%= link_to edit_admin_category_path(item), class: "btn btn-outline-dark" do %>
+                                  <i class="bi bi-pen-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Category"></i>
+                                <% end %>
+                                <%= link_to admin_category_path(category), data: { turbo_method: :delete, turbo_confirm: 'Are you sure to delete the Category?' }, class: "btn btn-outline-danger" do %>
+                                  <i class="bi bi-trash-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Category"></i>
+                                <% end %>
+                              </div>
+                              <div class="col-md-1 justify-content-center">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                  </div>
+                    </div>
+                  <% end %>
+                <% end %>
               </div>
+            </div>
           </div>
-          <% elsif !category.parent %>
-          <div class="w-100 bg-white p-3 fs-6 rounded-1 border">
-            <%= link_to root_path(category:category.id) do %>
-                <%= category.name %>
-            <% end %>
+        </div>
+      <% elsif !category.parent %>
+        <div>
+          <div class="accordion" id="accordionExample<%= category.id %>">
+            <div class="accordion-item">
+              <div class="accordion-header rounded-1 mx-5 py-3 py-2">
+                <div class="row">
+                  <div class="col-md-2">
+                    <%= category.name %>
+                  </div>
+                  <div class="col-md-5">
+                      <%= category.description %>
+                  </div>
+                  <div class="col-md-4">
+                    <%= link_to admin_category_path(category), class: "btn btn-outline-primary" do %>
+                      <i class="bi bi-eye-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Show Category"></i>
+                    <% end %>
+                    <%= link_to edit_admin_category_path(category), class: "btn btn-outline-dark" do %>
+                      <i class="bi bi-pen-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Category"></i>
+                    <% end %>
+                    <%= link_to admin_category_path(category), data: { turbo_method: :delete, turbo_confirm: 'Are you sure to delete the Category?' }, class: "btn btn-outline-danger" do %>
+                      <i class="bi bi-trash-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Category"></i>
+                    <% end %>
+                  </div>
+                  <div class="col-md-1 justify-content-center">
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <% end %>
+        </div>
       <% end %>
-    
-</table>
-
-<div align="center" class="mt-4">
-    <%= link_to 'Add Another', new_admin_category_path,class:"btn btn-outline-success" %>
+    <% end %>
+  </div>
 </div>
+
+

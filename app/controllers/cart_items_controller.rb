@@ -51,6 +51,8 @@ class CartItemsController < ApplicationController
       @cart_item = CartItem.find(params[:id])
       if @cart_item.quantity == 10
         redirect_to cart_items_path, alert: "Maximum 10 Quantity Can Be Ordered"
+      elsif @cart_item.product.count_stocks <= @cart_item.quantity
+        redirect_to cart_items_path, alert: " Sorry, This Quantity Is Not Availabe"
       else
         @cart_item.update(quantity: (@cart_item.quantity + 1))
         redirect_to cart_items_path, notice: "Quantity Added Successfully"

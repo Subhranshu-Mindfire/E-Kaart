@@ -116,3 +116,11 @@ thead > tr > th > span{
 .sorting_1{
   text-align: center !important;
 }
+
+.accordion-header .row div{
+  margin: auto;
+}
+
+.accordion-button{
+  width: auto;
+}
